@@ -7,43 +7,25 @@ const CATEGORIES = [
     title: 'Core & Game Engine',
     icon: Cpu,
     color: 'from-violet-500 to-indigo-500',
-    skills: [
-      { name: 'Lua Scripting', level: 'Uzman (Expert)', tag: 'Roblox Engine' },
-      { name: 'Game Physics & Mechanics', level: 'Gelişmiş', tag: 'Roblox / 2D/3D' },
-      { name: 'Soundscape Design', level: 'Atmosferik', tag: 'Procedural Audio' },
-    ],
+    skills: ['Lua Scripting', 'Game Physics & Mechanics', 'Soundscape Design'],
   },
   {
     title: 'Mobile & Web Platforms',
     icon: Smartphone,
     color: 'from-cyan-500 to-blue-500',
-    skills: [
-      { name: 'Flutter (Dart)', level: 'İleri Seviye', tag: 'Cross-Platform' },
-      { name: 'Supabase', level: 'Backend & DB', tag: 'PostgreSQL / Auth' },
-      { name: 'Vercel & Cloud', level: 'Deployment', tag: 'CI/CD' },
-    ],
+    skills: ['Flutter (Dart)', 'Supabase', 'Vercel & Cloud'],
   },
   {
     title: 'Developer & Tech Tools',
     icon: Layout,
     color: 'from-pink-500 to-rose-500',
-    skills: [
-      { name: 'HTML5 / CSS3 / Modern JS', level: 'İleri Seviye', tag: 'Frontend' },
-      { name: 'VS Code & CLI Tools', level: 'Günlük Workflow', tag: 'IDE' },
-      { name: 'Blender', level: '3D Modelleme', tag: 'Assets & Props' },
-      { name: 'Generative AI Workflows', level: 'İleri Seviye', tag: 'Prompt Engineering' },
-    ],
+    skills: ['HTML5 / CSS3 / Modern JS', 'VS Code & CLI Tools', 'Blender', 'Generative AI Workflows'],
   },
   {
     title: 'Tasarım & Medya',
     icon: Palette,
     color: 'from-amber-500 to-orange-500',
-    skills: [
-      { name: 'Figma', level: 'UI/UX Prototipleme', tag: 'Design System' },
-      { name: 'Photoshop', level: 'Orta Düzey', tag: 'Görsel Tasarım' },
-      { name: 'Fotoğrafçılık', level: 'Kreatif', tag: 'Kare & Işık' },
-      { name: 'Video Editör', level: 'Kurgu & Montaj', tag: 'Medya' },
-    ],
+    skills: ['Figma', 'Photoshop', 'Fotoğrafçılık', 'Video Editör'],
   },
 ];
 
@@ -52,9 +34,6 @@ export default function TechArsenal() {
     <section id="hakkimda" className="relative z-10 py-20 px-4 md:px-8 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex flex-col items-center text-center mb-16">
-        <span className="px-3.5 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 font-mono text-xs uppercase tracking-widest mb-3">
-          HAKKIMDA
-        </span>
         <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight uppercase">
           HAKKIMDA
         </h2>
@@ -90,23 +69,16 @@ export default function TechArsenal() {
                   </div>
                 </div>
 
-                {/* Skills List */}
-                <div className="space-y-3.5">
-                  {cat.skills.map((skill) => (
+                {/* Minimalist Skills List */}
+                <div className="space-y-2.5">
+                  {cat.skills.map((skillName) => (
                     <div
-                      key={skill.name}
-                      className="p-4 rounded-xl bg-slate-900/60 border border-white/5 hover:border-cyan-500/30 transition-all flex items-center justify-between group/item"
+                      key={skillName}
+                      className="px-4 py-3 rounded-xl bg-slate-900/60 border border-white/5 hover:border-cyan-500/30 transition-all flex items-center group/item"
                     >
-                      <div>
-                        <h4 className="font-semibold text-slate-100 group-hover/item:text-cyan-300 transition-colors">
-                          {skill.name}
-                        </h4>
-                        <span className="text-xs text-slate-400">{skill.level}</span>
-                      </div>
-
-                      <span className="px-2.5 py-1 rounded-full text-[11px] font-mono bg-violet-950/80 text-violet-300 border border-violet-800/40">
-                        {skill.tag}
-                      </span>
+                      <h4 className="font-semibold text-slate-100 group-hover/item:text-cyan-300 transition-colors text-sm md:text-base">
+                        {skillName}
+                      </h4>
                     </div>
                   ))}
                 </div>

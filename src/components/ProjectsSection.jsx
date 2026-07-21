@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Skull, AlertTriangle, Smartphone, Globe, Terminal, Clock, ExternalLink, Play } from 'lucide-react';
+import { BookOpen, Skull, AlertTriangle, Smartphone, Globe, Terminal, Clock, Play } from 'lucide-react';
 
 export default function ProjectsSection({ onOpenLore }) {
   const [glitchActive, setGlitchActive] = useState(false);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Users, ExternalLink, Gamepad2, MessageSquare } from 'lucide-react';
+import { ExternalLink, Gamepad2, MessageSquare } from 'lucide-react';
 
 const COMMUNITIES = [
   {
