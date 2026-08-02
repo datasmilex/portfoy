@@ -16,7 +16,7 @@ export default function ContactSection() {
       particleCount: 35,
       spread: 50,
       origin: { y: 0.8 },
-      colors: ['#8b5cf6', '#06b6d4', '#ec4899'],
+      colors: ['#ffffff', '#aaaaaa', '#555555'],
     });
 
     setTimeout(() => setCopied(false), 3000);
@@ -27,7 +27,7 @@ export default function ContactSection() {
       <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
         
         {/* Section Header: İletişim Bilgileri */}
-        <span className="px-3.5 py-1.5 rounded-full bg-violet-950/90 border border-violet-500/40 text-violet-300 font-mono text-xs uppercase tracking-widest mb-4">
+        <span className="px-3.5 py-1.5 rounded-none bg-[#111] border border-white/20 text-gray-300 font-mono text-xs uppercase tracking-widest mb-4">
           Birlikte Çalışalım
         </span>
 
@@ -44,19 +44,19 @@ export default function ContactSection() {
         <div className="relative mb-12">
           <button
             onClick={handleCopy}
-            className="group relative flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-violet-900/60 via-slate-900 to-indigo-900/60 border border-violet-500/40 hover:border-cyan-400 text-white font-mono text-sm md:text-base shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300 cursor-pointer"
+            className="group relative flex items-center gap-3 px-6 py-4 rounded-none bg-[#111] border border-white/20 hover:border-white hover:bg-white/5 text-white font-mono text-sm md:text-base shadow-none transition-all duration-300 cursor-pointer"
           >
-            <Mail className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform" />
+            <Mail className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
             <span className="font-semibold tracking-wide">{EMAIL}</span>
-            <div className="ml-2 pl-3 border-l border-white/20 flex items-center gap-1.5 text-xs text-violet-300">
+            <div className="ml-2 pl-3 border-l border-white/20 flex items-center gap-1.5 text-xs text-gray-400">
               {copied ? (
                 <>
-                  <Check className="w-4 h-4 text-emerald-400" />
-                  <span className="text-emerald-400 font-sans font-bold">Kopyalandı!</span>
+                  <Check className="w-4 h-4 text-white" />
+                  <span className="text-white font-sans font-bold">Kopyalandı!</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-4 h-4 text-slate-400 group-hover:text-cyan-300" />
+                  <Copy className="w-4 h-4 text-gray-400 group-hover:text-white" />
                   <span className="font-sans">Kopyala</span>
                 </>
               )}
@@ -70,7 +70,7 @@ export default function ContactSection() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute -top-12 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-emerald-500 text-slate-950 font-sans font-bold text-xs shadow-lg flex items-center gap-1.5"
+                className="absolute -top-12 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-none bg-white text-black font-sans font-bold text-xs shadow-lg flex items-center gap-1.5"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 E-posta adresi panoya kopyalandı!
@@ -82,11 +82,11 @@ export default function ContactSection() {
         {/* Footer */}
         <div className="pt-8 border-t border-white/10 w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-cyan-400" />
+            <span className="w-2 h-2 rounded-none bg-white" />
             <span>© 2026 Yunus Emre Gedik (Yunovax). Tüm Hakları Saklıdır.</span>
           </div>
 
-          <div className="text-violet-400 font-medium hover:text-cyan-300 transition-colors">
+          <div className="text-gray-500 font-medium hover:text-white transition-colors">
             buraya bakacağını biliyordum :)
           </div>
         </div>

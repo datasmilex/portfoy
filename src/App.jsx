@@ -30,7 +30,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#0A0A0C] text-slate-100 overflow-x-hidden selection:bg-violet-600/30 selection:text-cyan-300">
+    <div className="relative min-h-screen bg-[#050505] text-slate-200 overflow-x-hidden selection:bg-white/20 selection:text-white">
       {/* Antigravity Physics Interactive Hero Canvas */}
       <AntigravityCanvas isGravityOn={isGravityOn} />
 

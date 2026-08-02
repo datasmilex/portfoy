@@ -6,9 +6,7 @@ import { scrollToSection } from '../utils/scroll';
 export default function HeroSection({ isGravityOn, toggleGravity, onOpenTerminal }) {
   return (
     <section id="hero" className="relative min-h-[85vh] flex items-center justify-center px-4 py-16 overflow-hidden">
-      {/* Background Glow Orbs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-violet-600/15 rounded-full blur-[140px] pointer-events-none ambient-glow" />
-      <div className="absolute bottom-10 right-10 w-[350px] h-[350px] bg-cyan-500/15 rounded-full blur-[120px] pointer-events-none" />
+      {/* Background Glow Orbs Removed for Minimalist Look */}
 
       <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center">
         
@@ -17,9 +15,9 @@ export default function HeroSection({ isGravityOn, toggleGravity, onOpenTerminal
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border border-violet-500/30 text-xs font-mono text-cyan-300 mb-8"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-none border border-white/20 bg-black text-xs font-mono text-gray-300 mb-8"
         >
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+          <span className="w-2 h-2 bg-white animate-pulse" />
           <span>İnteraktif Portföy</span>
         </motion.div>
 
@@ -28,12 +26,12 @@ export default function HeroSection({ isGravityOn, toggleGravity, onOpenTerminal
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-4 text-white"
+          className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-4 text-white uppercase"
         >
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-slate-400">
+          <span>
             Yunus Emre Gedik
           </span>
-          <span className="block text-2xl sm:text-4xl md:text-5xl mt-2 font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-cyan-400 to-pink-500 glow-text-violet">
+          <span className="block text-2xl sm:text-4xl md:text-5xl mt-2 font-bold text-gray-400">
             (Yunovax)
           </span>
         </motion.h1>
@@ -43,11 +41,11 @@ export default function HeroSection({ isGravityOn, toggleGravity, onOpenTerminal
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-lg sm:text-2xl font-medium text-cyan-400 mb-6 tracking-wide flex items-center justify-center gap-2 flex-wrap"
+          className="text-lg sm:text-2xl font-medium text-gray-300 mb-6 tracking-wide flex items-center justify-center gap-2 flex-wrap"
         >
-          <Code2 className="w-6 h-6 text-violet-400 inline" />
+          <Code2 className="w-6 h-6 text-white inline" />
           <span>UI/UX Designer & Interactive Experience Developer</span>
-          <Gamepad2 className="w-6 h-6 text-pink-400 inline" />
+          <Gamepad2 className="w-6 h-6 text-white inline" />
         </motion.h2>
 
         {/* Short Bio (Exact requested text) */}
@@ -55,7 +53,7 @@ export default function HeroSection({ isGravityOn, toggleGravity, onOpenTerminal
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed mb-10 font-normal glass-panel p-6 rounded-2xl border border-white/10 shadow-2xl"
+          className="text-base sm:text-lg text-gray-400 max-w-2xl leading-relaxed mb-10 font-normal border border-white/20 p-6 rounded-none bg-[#0A0A0A]"
         >
           "Roblox üzerinde derin hikayeli psikolojik deneyimler kurgularken, web ve mobil tarafında kullanıcı dostu dijital ürünler geliştiriyorum."
         </motion.p>
@@ -69,9 +67,9 @@ export default function HeroSection({ isGravityOn, toggleGravity, onOpenTerminal
         >
           <button
             onClick={() => scrollToSection('projects', 1000)}
-            className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold text-sm hover:from-violet-500 hover:to-indigo-500 transition-all shadow-lg shadow-violet-600/30 flex items-center gap-2 group cursor-pointer"
+            className="px-6 py-3.5 rounded-none bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-all flex items-center gap-2 group cursor-pointer"
           >
-            <Sparkles className="w-4 h-4 text-cyan-300 group-hover:rotate-12 transition-transform" />
+            <Sparkles className="w-4 h-4 text-black group-hover:rotate-12 transition-transform" />
             <span>Projeleri Keşfet</span>
             <ArrowDownRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform" />
           </button>
@@ -79,25 +77,25 @@ export default function HeroSection({ isGravityOn, toggleGravity, onOpenTerminal
           {/* Gravity Button Label strictly "Yerçekimi" */}
           <button
             onClick={toggleGravity}
-            className={`px-6 py-3.5 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 border cursor-pointer ${
+            className={`px-6 py-3.5 rounded-none font-semibold text-sm transition-all flex items-center gap-2 border cursor-pointer ${
               isGravityOn
-                ? 'bg-rose-500/20 border-rose-500/50 text-rose-300 hover:bg-rose-500/30 shadow-lg shadow-rose-500/20'
-                : 'bg-cyan-500/20 border-cyan-400/50 text-cyan-300 hover:bg-cyan-500/30 shadow-lg shadow-cyan-500/20'
+                ? 'bg-white/10 border-white text-white'
+                : 'bg-transparent border-white/20 text-white hover:bg-white/10'
             }`}
           >
             {isGravityOn ? (
-              <MoveDown className="w-4 h-4 text-rose-400 animate-bounce" />
+              <MoveDown className="w-4 h-4 text-white animate-bounce" />
             ) : (
-              <Orbit className="w-4 h-4 text-cyan-400" />
+              <Orbit className="w-4 h-4 text-white" />
             )}
             <span>Yerçekimi</span>
           </button>
 
           <button
             onClick={onOpenTerminal}
-            className="px-5 py-3.5 rounded-xl glass-panel border border-violet-500/30 text-violet-300 font-mono text-sm hover:bg-violet-900/30 transition-all flex items-center gap-2 cursor-pointer"
+            className="px-5 py-3.5 rounded-none bg-[#050505] border border-white/20 text-gray-300 font-mono text-sm hover:bg-white/10 hover:text-white transition-all flex items-center gap-2 cursor-pointer"
           >
-            <Zap className="w-4 h-4 text-yellow-400" />
+            <Zap className="w-4 h-4 text-gray-300" />
             <span>Terminal CLI</span>
           </button>
         </motion.div>

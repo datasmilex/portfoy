@@ -14,49 +14,49 @@ export default function Navbar({ isGravityOn, toggleGravity, onOpenTerminal }) {
         
         {/* Brand / Logo */}
         <button onClick={(e) => handleNavClick(e, 'hero')} className="flex items-center gap-3 group text-left cursor-pointer">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-600 via-indigo-500 to-cyan-400 p-[1px] shadow-lg shadow-violet-500/20 group-hover:scale-105 transition-transform duration-300">
-            <div className="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-cyan-400 group-hover:rotate-12 transition-transform duration-300" />
+          <div className="w-10 h-10 rounded-xl bg-white/20 p-[1px] transition-transform duration-300 group-hover:scale-105">
+            <div className="w-full h-full bg-[#050505] rounded-[11px] flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-white group-hover:rotate-12 transition-transform duration-300" />
             </div>
           </div>
           <div className="flex flex-col">
-            <span className="font-bold text-lg tracking-wider text-white group-hover:text-cyan-400 transition-colors">
+            <span className="font-bold text-lg tracking-wider text-white group-hover:text-gray-300 transition-colors">
               YUNOVAX
             </span>
-            <span className="text-[10px] tracking-widest text-violet-400 uppercase font-mono">
+            <span className="text-[10px] tracking-widest text-gray-400 uppercase font-mono">
               Yunus Emre Gedik
             </span>
           </div>
         </button>
 
         {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
           <button
             onClick={(e) => handleNavClick(e, 'projects')}
-            className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
           >
-            <Compass className="w-4 h-4 text-violet-400" />
+            <Compass className="w-4 h-4 text-gray-400" />
             Projeler
           </button>
           <button
             onClick={(e) => handleNavClick(e, 'hakkimda')}
-            className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
           >
-            <User className="w-4 h-4 text-pink-400" />
+            <User className="w-4 h-4 text-gray-400" />
             Hakkımda
           </button>
           <button
             onClick={(e) => handleNavClick(e, 'community')}
-            className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
           >
-            <Users className="w-4 h-4 text-indigo-400" />
+            <Users className="w-4 h-4 text-gray-400" />
             Topluluk
           </button>
           <button
             onClick={(e) => handleNavClick(e, 'contact')}
-            className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
           >
-            <Mail className="w-4 h-4 text-cyan-400" />
+            <Mail className="w-4 h-4 text-gray-400" />
             İletişim
           </button>
         </nav>
@@ -64,20 +64,20 @@ export default function Navbar({ isGravityOn, toggleGravity, onOpenTerminal }) {
         {/* Action Controls */}
         <div className="flex items-center gap-3">
           
-          {/* Gravity Toggle Button - Label strictly "Yerçekimi" */}
+          {/* Gravity Toggle Button */}
           <button
             onClick={toggleGravity}
-            className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 cursor-pointer ${
+            className={`relative flex items-center gap-2 px-4 py-2 rounded-none border text-xs font-semibold tracking-wide transition-all duration-300 cursor-pointer ${
               isGravityOn
-                ? 'bg-rose-500/20 border border-rose-500/50 text-rose-300 shadow-lg shadow-rose-500/20'
-                : 'bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 shadow-lg shadow-cyan-500/20 animate-pulse'
+                ? 'bg-white/10 border-white text-white'
+                : 'bg-transparent border-white/20 text-gray-400 hover:text-white hover:border-white/50'
             }`}
             title="Yerçekimi Fizikini Değiştir"
           >
             {isGravityOn ? (
-              <MoveDown className="w-4 h-4 text-rose-400 animate-bounce" />
+              <MoveDown className="w-4 h-4 text-white animate-bounce" />
             ) : (
-              <Orbit className="w-4 h-4 text-cyan-400 animate-spin" style={{ animationDuration: '6s' }} />
+              <Orbit className="w-4 h-4 text-gray-400" />
             )}
             <span>Yerçekimi</span>
           </button>
@@ -85,11 +85,11 @@ export default function Navbar({ isGravityOn, toggleGravity, onOpenTerminal }) {
           {/* Terminal CLI Trigger Button */}
           <button
             onClick={onOpenTerminal}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-violet-950/60 border border-violet-500/40 text-violet-300 hover:text-white hover:bg-violet-900/60 transition-all text-xs font-mono group cursor-pointer"
+            className="flex items-center gap-2 px-3 py-2 rounded-none bg-black border border-white/20 text-gray-400 hover:text-white hover:bg-white/10 transition-all text-xs font-mono group cursor-pointer"
           >
-            <Terminal className="w-4 h-4 text-violet-400 group-hover:scale-110 transition-transform" />
+            <Terminal className="w-4 h-4 text-gray-400 group-hover:scale-110 transition-transform" />
             <span className="hidden sm:inline">CLI</span>
-            <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] bg-slate-900 border border-violet-500/30 rounded text-slate-400">
+            <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] bg-black border border-white/20 rounded-none text-gray-500">
               Ctrl+K
             </kbd>
           </button>

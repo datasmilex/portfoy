@@ -152,17 +152,17 @@ export default function LoreModal({ isOpen, onClose }) {
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-[95vw] sm:w-full max-w-3xl max-h-[85vh] sm:max-h-[90vh] glass-panel rounded-3xl border border-violet-500/30 overflow-hidden shadow-2xl shadow-violet-950/80 p-5 sm:p-8 flex flex-col justify-between"
+          className="relative w-[95vw] sm:w-full max-w-3xl max-h-[85vh] sm:max-h-[90vh] bg-[#050505] rounded-none border border-white/20 overflow-hidden shadow-2xl p-5 sm:p-8 flex flex-col justify-between"
         >
           {/* Top Bar Controls */}
           <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4 shrink-0">
             <div className="flex items-center gap-2.5 overflow-hidden">
-              <div className="w-9 h-9 rounded-xl bg-violet-950/90 border border-violet-500/50 flex items-center justify-center text-violet-400 shrink-0">
+              <div className="w-9 h-9 rounded-none bg-[#111] border border-white/20 flex items-center justify-center text-white shrink-0">
                 <Skull className="w-4 h-4" />
               </div>
               <div className="truncate">
                 <h3 className="text-base sm:text-xl font-bold text-white tracking-wide truncate">The Pier: Endless Depths</h3>
-                <span className="text-[11px] sm:text-xs font-mono text-violet-400 block truncate">Cinematic Lore</span>
+                <span className="text-[11px] sm:text-xs font-mono text-gray-400 block truncate">Cinematic Lore</span>
               </div>
             </div>
 
@@ -170,15 +170,15 @@ export default function LoreModal({ isOpen, onClose }) {
               {/* Ambient Audio Toggle */}
               <button
                 onClick={toggleAudio}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border text-xs font-mono transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-none border text-xs font-mono transition-all cursor-pointer ${
                   isPlayingAudio
-                    ? 'bg-violet-900/60 border-violet-400 text-cyan-300 animate-pulse'
-                    : 'bg-slate-900 border-white/10 text-slate-400 hover:text-white'
+                    ? 'bg-white border-white text-black animate-pulse'
+                    : 'bg-black border-white/10 text-gray-400 hover:text-white'
                 }`}
               >
                 {isPlayingAudio ? (
                   <>
-                    <Volume2 className="w-4 h-4 text-cyan-400" />
+                    <Volume2 className="w-4 h-4 text-black" />
                     <span className="hidden sm:inline">Ambiyans Ses: AÇIK</span>
                   </>
                 ) : (
@@ -204,21 +204,21 @@ export default function LoreModal({ isOpen, onClose }) {
           </div>
 
           {/* Typewriter Text Box */}
-          <div className="flex-1 overflow-y-auto min-h-[180px] bg-slate-950/80 rounded-2xl border border-violet-900/30 p-5 sm:p-7 font-serif text-slate-200 text-sm sm:text-lg leading-relaxed whitespace-pre-line shadow-inner">
+          <div className="flex-1 overflow-y-auto min-h-[180px] bg-[#0A0A0A] rounded-none border border-white/10 p-5 sm:p-7 font-serif text-slate-200 text-sm sm:text-lg leading-relaxed whitespace-pre-line shadow-inner">
             {displayedText}
-            {!isTypingComplete && <span className="inline-block w-2 h-5 bg-violet-400 ml-1 animate-pulse" />}
+            {!isTypingComplete && <span className="inline-block w-2 h-5 bg-white ml-1 animate-pulse" />}
           </div>
 
           {/* Bottom Actions */}
           <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/10 shrink-0">
             <span className="text-xs font-mono text-slate-400 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-violet-400" />
+              <Sparkles className="w-3.5 h-3.5 text-white" />
               Kurgu: Yunus Emre Gedik
             </span>
 
             <button
               onClick={handleReplay}
-              className="flex items-center gap-1.5 text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 text-xs font-mono text-gray-400 hover:text-white transition-colors cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               Yeniden Oynat

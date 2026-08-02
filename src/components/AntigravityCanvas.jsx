@@ -2,19 +2,19 @@ import React, { useEffect, useRef } from 'react';
 import Matter from 'matter-js';
 
 const ALL_BADGES = [
-  { label: 'Lua (Expert)', color: '#000080', border: '#3B82F6', type: 'core', shape: 'pill' },
-  { label: 'Flutter', color: '#02569B', border: '#38BDF8', type: 'mobile', shape: 'pill' },
-  { label: 'Supabase', color: '#3ECF8E', border: '#10B981', type: 'saas', shape: 'pill' },
-  { label: 'Vercel', color: '#000000', border: '#F43F5E', type: 'web', shape: 'pill' },
-  { label: 'Roblox Dev', color: '#E11D48', border: '#FB7185', type: 'game', shape: 'card' },
-  { label: 'The Pier', color: '#1E1B4B', border: '#8B5CF6', type: 'horror', shape: 'card' },
-  { label: 'YDCO Obby', color: '#881337', border: '#F43F5E', type: 'meta', shape: 'card' },
-  { label: 'Figma', color: '#F24E1E', border: '#A855F7', type: 'design', shape: 'pill' },
-  { label: 'Blender 3D', color: '#EA580C', border: '#F97316', type: '3d', shape: 'pill' },
-  { label: 'Generative AI', color: '#4C1D95', border: '#C084FC', type: 'ai', shape: 'pill' },
-  { label: 'Muzikors', color: '#0369A1', border: '#06B6D4', type: 'saas', shape: 'card' },
-  { label: 'Photoshop', color: '#31A8FF', border: '#00C8FF', type: 'design', shape: 'pill' },
-  { label: 'Video Editör', color: '#9999FF', border: '#A855F7', type: 'media', shape: 'pill' },
+  { label: 'Lua (Expert)', color: '#000000', border: '#555555', type: 'core', shape: 'pill' },
+  { label: 'Flutter', color: '#000000', border: '#555555', type: 'mobile', shape: 'pill' },
+  { label: 'Supabase', color: '#000000', border: '#555555', type: 'saas', shape: 'pill' },
+  { label: 'Vercel', color: '#000000', border: '#555555', type: 'web', shape: 'pill' },
+  { label: 'Roblox Dev', color: '#000000', border: '#555555', type: 'game', shape: 'card' },
+  { label: 'The Pier', color: '#000000', border: '#555555', type: 'horror', shape: 'card' },
+  { label: 'YDCO Obby', color: '#000000', border: '#555555', type: 'meta', shape: 'card' },
+  { label: 'Figma', color: '#000000', border: '#555555', type: 'design', shape: 'pill' },
+  { label: 'Blender 3D', color: '#000000', border: '#555555', type: '3d', shape: 'pill' },
+  { label: 'Generative AI', color: '#000000', border: '#555555', type: 'ai', shape: 'pill' },
+  { label: 'Muzikors', color: '#000000', border: '#555555', type: 'saas', shape: 'card' },
+  { label: 'Photoshop', color: '#000000', border: '#555555', type: 'design', shape: 'pill' },
+  { label: 'Video Editör', color: '#000000', border: '#555555', type: 'media', shape: 'pill' },
 ];
 
 export default function AntigravityCanvas({ isGravityOn }) {
@@ -134,7 +134,7 @@ export default function AntigravityCanvas({ isGravityOn }) {
           vy: (Math.random() - 0.5) * 1.5,
           size: Math.random() * 3 + 1.5,
           alpha: 0.8,
-          color: Math.random() > 0.5 ? '#8B5CF6' : '#06B6D4',
+          color: '#FFFFFF',
         });
       }
     };
@@ -252,11 +252,11 @@ export default function AntigravityCanvas({ isGravityOn }) {
         const r = shape === 'pill' ? bH / 2 : 8;
 
         if (!isMobile) {
-          ctx.shadowColor = border;
-          ctx.shadowBlur = 8;
+          ctx.shadowColor = 'transparent';
+          ctx.shadowBlur = 0;
         }
 
-        ctx.fillStyle = 'rgba(12, 12, 18, 0.88)';
+        ctx.fillStyle = '#050505';
         ctx.strokeStyle = border;
         ctx.lineWidth = 1.2;
 

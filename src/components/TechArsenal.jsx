@@ -6,25 +6,21 @@ const CATEGORIES = [
   {
     title: 'Core & Game Engine',
     icon: Cpu,
-    color: 'from-violet-500 to-indigo-500',
     skills: ['Lua Scripting', 'Game Physics & Mechanics', 'Soundscape Design'],
   },
   {
     title: 'Mobile & Web Platforms',
     icon: Smartphone,
-    color: 'from-cyan-500 to-blue-500',
     skills: ['Flutter (Dart)', 'Supabase', 'Vercel & Cloud'],
   },
   {
     title: 'Developer & Tech Tools',
     icon: Layout,
-    color: 'from-pink-500 to-rose-500',
     skills: ['HTML5 / CSS3 / Modern JS', 'VS Code & CLI Tools', 'Blender', 'Generative AI Workflows'],
   },
   {
     title: 'Tasarım & Medya',
     icon: Palette,
-    color: 'from-amber-500 to-orange-500',
     skills: ['Figma', 'Photoshop', 'Fotoğrafçılık', 'Video Editör'],
   },
 ];
@@ -53,13 +49,13 @@ export default function TechArsenal() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="glass-panel p-6 md:p-8 rounded-3xl border border-white/10 relative overflow-hidden group hover:border-violet-500/40 transition-all flex flex-col justify-between"
+              className="p-6 md:p-8 rounded-none bg-[#0A0A0A] border border-white/20 relative overflow-hidden group hover:border-white transition-all flex flex-col justify-between"
             >
               <div>
                 {/* Category Header */}
                 <div className="flex items-center gap-4 mb-6">
-                  <div className={`w-12 h-12 rounded-2xl bg-gradient-to-tr ${cat.color} p-[1px] shadow-lg`}>
-                    <div className="w-full h-full bg-slate-950 rounded-[15px] flex items-center justify-center">
+                  <div className={`w-12 h-12 rounded-none bg-white/20 p-[1px]`}>
+                    <div className="w-full h-full bg-[#050505] rounded-none flex items-center justify-center">
                       <Icon className="w-6 h-6 text-white" />
                     </div>
                   </div>
@@ -74,9 +70,9 @@ export default function TechArsenal() {
                   {cat.skills.map((skillName) => (
                     <div
                       key={skillName}
-                      className="px-4 py-3 rounded-xl bg-slate-900/60 border border-white/5 hover:border-cyan-500/30 transition-all flex items-center group/item"
+                      className="px-4 py-3 rounded-none bg-[#111] border border-white/10 hover:border-white/50 hover:bg-white/5 transition-all flex items-center group/item"
                     >
-                      <h4 className="font-semibold text-slate-100 group-hover/item:text-cyan-300 transition-colors text-sm md:text-base">
+                      <h4 className="font-semibold text-slate-100 group-hover/item:text-white transition-colors text-sm md:text-base">
                         {skillName}
                       </h4>
                     </div>
@@ -90,3 +86,4 @@ export default function TechArsenal() {
     </section>
   );
 }
+
