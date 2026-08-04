@@ -34,6 +34,11 @@ export default function App() {
       {/* Antigravity Physics Interactive Hero Canvas */}
       <AntigravityCanvas isGravityOn={isGravityOn} />
 
+      {/* SEO Hidden Text */}
+      <h1 className="sr-only">
+        Yunus Emre Gedik Portföy - UI/UX Designer & Interactive Developer. Yunus Emre Gedik, Yunovax Portföy, Roblox Developer Yunus Emre Gedik.
+      </h1>
+
       {/* Main Content Layout */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar
