@@ -18,55 +18,76 @@ export default function DownloadButton({ media }) {
 
     setIsDownloading(true);
     setIsSuccess(false);
-    setDownloadProgress(15);
+    setDownloadProgress(20);
 
     const filename = generateFileName(media.author?.username, media.shortcode);
     const toastId = toast.loading('Video indiriliyor...');
 
+    // Same-origin stream proxy URL to avoid browser CORS errors
+    const streamProxyUrl = `/api/download?stream=${encodeURIComponent(media.videoUrl)}&filename=${encodeURIComponent(filename)}`;
+
     try {
-      setDownloadProgress(45);
+      setDownloadProgress(50);
+
+      // Attempt 1: Fetch via our internal serverless stream proxy
+      const response = await fetch(streamProxyUrl);
       
-      // Try blob download for direct file saving
-      const response = await fetch(media.videoUrl);
-      if (!response.ok) throw new Error('Video çekilemedi');
+      if (response.ok) {
+        setDownloadProgress(85);
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
 
-      setDownloadProgress(80);
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(blobUrl);
 
-      const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(blobUrl);
+        setDownloadProgress(100);
+        setIsSuccess(true);
+        toast.success('Video cihazınıza indirildi!', { id: toastId });
 
-      setDownloadProgress(100);
-      setIsSuccess(true);
-      toast.success('Video başarıyla indirildi!', { id: toastId });
+        // Trigger confetti celebration
+        try {
+          confetti({
+            particleCount: 50,
+            spread: 60,
+            origin: { y: 0.8 },
+            colors: ['#ec4899', '#f43f5e', '#f59e0b', '#8b5cf6'],
+          });
+        } catch (e) {}
 
-      // Trigger celebration confetti
-      try {
-        confetti({
-          particleCount: 50,
-          spread: 60,
-          origin: { y: 0.8 },
-          colors: ['#ec4899', '#f43f5e', '#f59e0b', '#8b5cf6'],
-        });
-      } catch (e) {}
-
-      setTimeout(() => {
-        setIsSuccess(false);
-        setDownloadProgress(0);
-      }, 4000);
+        setTimeout(() => {
+          setIsSuccess(false);
+          setDownloadProgress(0);
+        }, 4000);
+        return;
+      }
+      throw new Error('Proxy stream error');
     } catch (err) {
-      // Fallback: Direct window open if CORS blocks blob fetch
+      // Fallback: Direct download trigger without fetch CORS check
       try {
+        const directAnchor = document.createElement('a');
+        directAnchor.href = streamProxyUrl;
+        directAnchor.download = filename;
+        directAnchor.target = '_blank';
+        document.body.appendChild(directAnchor);
+        directAnchor.click();
+        document.body.removeChild(directAnchor);
+
+        setDownloadProgress(100);
+        setIsSuccess(true);
+        toast.success('Video indirmesi başlatıldı!', { id: toastId });
+
+        setTimeout(() => {
+          setIsSuccess(false);
+          setDownloadProgress(0);
+        }, 4000);
+      } catch (fallbackErr) {
         window.open(media.videoUrl, '_blank');
-        toast.success('Video yeni sekmede açıldı, oradan kaydedebilirsiniz.', { id: toastId });
-      } catch (e) {
-        toast.error('İndirme başarısız oldu. Lütfen tekrar deneyin.', { id: toastId });
+        toast.success('Video yeni sekmede açıldı.', { id: toastId });
       }
     } finally {
       setIsDownloading(false);
