@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Gamepad2, ArrowDownRight, Code2 } from 'lucide-react';
+import { Layers, Gamepad2, ArrowDownRight, Code2 } from 'lucide-react';
 import { scrollToSection } from '../utils/scroll';
 
 export default function HeroSection() {
@@ -65,9 +65,9 @@ export default function HeroSection() {
         >
           <button
             onClick={() => scrollToSection('projects', 1000)}
-            className="px-8 py-3.5 rounded-none bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-all flex items-center gap-2 group cursor-pointer"
+            className="px-8 py-3.5 rounded-none bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-all flex items-center gap-2.5 group cursor-pointer"
           >
-            <Sparkles className="w-4 h-4 text-black group-hover:rotate-12 transition-transform" />
+            <Layers className="w-4 h-4 text-black group-hover:scale-110 transition-transform" />
             <span>Projeleri Keşfet</span>
             <ArrowDownRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform" />
           </button>

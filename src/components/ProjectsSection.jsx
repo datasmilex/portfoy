@@ -119,13 +119,13 @@ export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-purple-500/10 text-purple-300 border border-purple-500/20">
-                  Flutter
-                </span>
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
                   Mobile & Web
                 </span>
                 <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
                   Audio Streaming
+                </span>
+                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                  Cross-Platform
                 </span>
               </div>
               <p className="text-slate-300 text-sm leading-relaxed mb-6">

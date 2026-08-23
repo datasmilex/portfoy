@@ -11,12 +11,12 @@ const CATEGORIES = [
   {
     title: 'Mobile & Web Platforms',
     icon: Smartphone,
-    skills: ['Flutter (Dart)', 'Supabase', 'Vercel & Cloud'],
+    skills: ['FlutterFlow', 'Supabase', 'Vercel & Cloud'],
   },
   {
     title: 'Developer & Tech Tools',
     icon: Layout,
-    skills: ['HTML5 / CSS3 / Modern JS', 'VS Code & CLI Tools', 'Blender', 'Generative AI Workflows'],
+    skills: ['VS Code & CLI Tools', 'Blender', 'Generative AI Workflows'],
   },
   {
     title: 'Tasarım & Medya',
@@ -86,4 +86,3 @@ export default function TechArsenal() {
     </section>
   );
 }
-
