@@ -1,8 +1,9 @@
 /**
  * Vercel Serverless Function: /api/download
- * Supports both POST and GET.
- * Supports RapidAPI Key (process.env.RAPIDAPI_KEY) for 100% cloud reliability with 0 Cloudflare blocks.
+ * Fully configured with user's Safesite RapidAPI key + multi-tier fallback scrapers.
  */
+
+const DEFAULT_RAPIDAPI_KEY = '5d9a671ebbmshca5285f2d1854f0p154a1ajsn0ca2677241d2';
 
 function decodeB64(str) {
   if (!str) return '';
@@ -14,62 +15,40 @@ function decodeB64(str) {
 }
 
 /**
- * RapidAPI Extraction (Highest Reliability on Cloud/Vercel)
+ * 1. User's Safesite RapidAPI Endpoint (Primary Engine)
  */
-async function extractViaRapidAPI(shortcode, apiKey) {
-  if (!apiKey) return null;
-  const postUrl = `https://www.instagram.com/reel/${shortcode}/`;
+async function extractViaSafesiteRapidAPI(url, apiKey) {
+  const key = apiKey || process.env.RAPIDAPI_KEY || DEFAULT_RAPIDAPI_KEY;
+  try {
+    const endpoint = `https://instagram-downloader-download-instagram-stories-videos4.p.rapidapi.com/convert?url=${encodeURIComponent(url)}`;
+    const res = await fetch(endpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-rapidapi-host': 'instagram-downloader-download-instagram-stories-videos4.p.rapidapi.com',
+        'x-rapidapi-key': key,
+      },
+    });
 
-  const endpoints = [
-    {
-      url: `https://instagram-downloader-download-instagram-videos-stories1.p.rapidapi.com/get-info-rapidapi?url=${encodeURIComponent(postUrl)}`,
-      host: 'instagram-downloader-download-instagram-videos-stories1.p.rapidapi.com',
-      parse: (json) => ({
-        videoUrl: json?.download_url || json?.video_url || json?.url,
-        thumbnailUrl: json?.thumbnail_url || json?.thumb,
-        title: json?.title,
-      }),
-    },
-    {
-      url: `https://instagram-reels-downloader.p.rapidapi.com/reels?url=${encodeURIComponent(postUrl)}`,
-      host: 'instagram-reels-downloader.p.rapidapi.com',
-      parse: (json) => ({
-        videoUrl: json?.data?.video_url || json?.data?.url || json?.video_url,
-        thumbnailUrl: json?.data?.thumbnail_url,
-        title: json?.data?.title,
-      }),
-    },
-    {
-      url: `https://social-media-video-downloader.p.rapidapi.com/smvd/get/instagram?url=${encodeURIComponent(postUrl)}`,
-      host: 'social-media-video-downloader.p.rapidapi.com',
-      parse: (json) => ({
-        videoUrl: json?.links?.[0]?.link || json?.links?.[0]?.url,
-        thumbnailUrl: json?.picture,
-        title: json?.title,
-      }),
-    },
-  ];
-
-  for (const ep of endpoints) {
-    try {
-      const res = await fetch(ep.url, {
-        headers: {
-          'x-rapidapi-key': apiKey,
-          'x-rapidapi-host': ep.host,
-        },
-      });
-      if (res.ok) {
-        const json = await res.json();
-        const parsed = ep.parse(json);
-        if (parsed.videoUrl) return parsed;
+    if (res.ok) {
+      const json = await res.json();
+      const videoItem = json?.media?.find((m) => m.type === 'video' || (m.url && m.url.includes('.mp4'))) || json?.media?.[0];
+      if (videoItem && videoItem.url) {
+        return {
+          videoUrl: videoItem.url,
+          thumbnailUrl: videoItem.thumbnail,
+          title: json.title || 'Reels Videosu',
+        };
       }
-    } catch (e) {}
+    }
+  } catch (e) {
+    console.error('Safesite RapidAPI error:', e);
   }
   return null;
 }
 
 /**
- * oEmbed Metadata
+ * 2. oEmbed Metadata
  */
 async function fetchOEmbed(shortcode) {
   try {
@@ -83,7 +62,7 @@ async function fetchOEmbed(shortcode) {
 }
 
 /**
- * SaveIG Scraper
+ * 3. SaveIG Scraper
  */
 async function extractSaveIG(shortcode) {
   try {
@@ -133,7 +112,7 @@ async function extractSaveIG(shortcode) {
 }
 
 /**
- * InstaVideoSave Scraper
+ * 4. InstaVideoSave Scraper
  */
 async function extractInstaVideoSave(shortcode) {
   try {
@@ -172,7 +151,7 @@ async function extractInstaVideoSave(shortcode) {
 }
 
 /**
- * Cobalt Multi-Node
+ * 5. Cobalt Multi-Node Scraper
  */
 async function extractCobalt(shortcode) {
   const cobaltNodes = [
@@ -217,7 +196,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // Stream proxy for downloads
+  // Stream proxy for downloads: GET /api/download?stream=...
   if (req.method === 'GET' && req.query.stream) {
     try {
       const streamUrl = decodeURIComponent(req.query.stream);
@@ -274,13 +253,11 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: false, error: 'Reels bağlantısı veya shortcode doğrulanamadı.' });
     }
 
-    const apiKey = process.env.RAPIDAPI_KEY || process.env.RAPID_API_KEY || '';
+    const cleanUrl = `https://www.instagram.com/reel/${shortcode}/`;
+    const apiKey = process.env.RAPIDAPI_KEY || DEFAULT_RAPIDAPI_KEY;
 
-    // Step 1: If RAPIDAPI_KEY is configured in Vercel, try it first (100% reliable)
-    let extractedVideo = null;
-    if (apiKey) {
-      extractedVideo = await extractViaRapidAPI(shortcode, apiKey);
-    }
+    // Step 1: Safesite RapidAPI (Primary)
+    let extractedVideo = await extractViaSafesiteRapidAPI(cleanUrl, apiKey);
 
     // Step 2: Parallel oEmbed + SaveIG
     const [oembedData, saveIgResult] = await Promise.all([
