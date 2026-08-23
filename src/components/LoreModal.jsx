@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Volume2, VolumeX, Sparkles, Skull, RotateCcw } from 'lucide-react';
+import { X, Skull, RotateCcw } from 'lucide-react';
 
 const LORE_TEXT = `Sisle kaplı sonsuz bir okyanusun ortasında, nereye uzandığı bilinmeyen ahşap bir iskele...
 
@@ -13,14 +13,7 @@ Burada amaç sadece ilerlemek değil; kendi zihninizin karanlığıyla yüzleşm
 export default function LoreModal({ isOpen, onClose }) {
   const [displayedText, setDisplayedText] = useState('');
   const [isTypingComplete, setIsTypingComplete] = useState(false);
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-
   const typewriterTimerRef = useRef(null);
-
-  const audioCtxRef = useRef(null);
-  const osc1Ref = useRef(null);
-  const osc2Ref = useRef(null);
-  const gainNodeRef = useRef(null);
 
   const startTypewriter = () => {
     if (typewriterTimerRef.current) {
@@ -49,12 +42,10 @@ export default function LoreModal({ isOpen, onClose }) {
       if (typewriterTimerRef.current) clearInterval(typewriterTimerRef.current);
       setDisplayedText('');
       setIsTypingComplete(false);
-      stopAudio();
       return;
     }
 
     startTypewriter();
-    startAudio();
 
     return () => {
       if (typewriterTimerRef.current) clearInterval(typewriterTimerRef.current);
@@ -63,84 +54,6 @@ export default function LoreModal({ isOpen, onClose }) {
 
   const handleReplay = () => {
     startTypewriter();
-  };
-
-  const toggleAudio = () => {
-    if (isPlayingAudio) {
-      stopAudio();
-    } else {
-      startAudio();
-    }
-  };
-
-  const startAudio = () => {
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      let ctx = audioCtxRef.current;
-      
-      if (!ctx || ctx.state === 'closed') {
-        ctx = new AudioContext();
-        audioCtxRef.current = ctx;
-      }
-
-      if (ctx.state === 'suspended') {
-        ctx.resume();
-      }
-
-      if (osc1Ref.current) try { osc1Ref.current.stop(); } catch (e) {}
-      if (osc2Ref.current) try { osc2Ref.current.stop(); } catch (e) {}
-
-      const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.001, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 2);
-      gainNodeRef.current = gain;
-
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(180, ctx.currentTime);
-
-      const osc1 = ctx.createOscillator();
-      osc1.type = 'sine';
-      osc1.frequency.setValueAtTime(65.41, ctx.currentTime);
-
-      const osc2 = ctx.createOscillator();
-      osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(98.0, ctx.currentTime);
-
-      osc1.connect(filter);
-      osc2.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc1.start();
-      osc2.start();
-
-      osc1Ref.current = osc1;
-      osc2Ref.current = osc2;
-
-      setIsPlayingAudio(true);
-    } catch (e) {
-      console.warn('Web Audio API play error:', e);
-    }
-  };
-
-  const stopAudio = () => {
-    if (gainNodeRef.current && audioCtxRef.current) {
-      try {
-        gainNodeRef.current.gain.exponentialRampToValueAtTime(0.0001, audioCtxRef.current.currentTime + 0.6);
-        setTimeout(() => {
-          if (osc1Ref.current) { try { osc1Ref.current.stop(); } catch (e) {} }
-          if (osc2Ref.current) { try { osc2Ref.current.stop(); } catch (e) {} }
-          if (audioCtxRef.current && audioCtxRef.current.state !== 'closed') {
-            audioCtxRef.current.close();
-          }
-          audioCtxRef.current = null;
-        }, 600);
-      } catch (e) {
-        // ignore
-      }
-    }
-    setIsPlayingAudio(false);
   };
 
   if (!isOpen) return null;
@@ -167,34 +80,9 @@ export default function LoreModal({ isOpen, onClose }) {
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
-              {/* Ambient Audio Toggle */}
-              <button
-                onClick={toggleAudio}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-none border text-xs font-mono transition-all cursor-pointer ${
-                  isPlayingAudio
-                    ? 'bg-white border-white text-black animate-pulse'
-                    : 'bg-black border-white/10 text-gray-400 hover:text-white'
-                }`}
-              >
-                {isPlayingAudio ? (
-                  <>
-                    <Volume2 className="w-4 h-4 text-black" />
-                    <span className="hidden sm:inline">Ambiyans Ses: AÇIK</span>
-                  </>
-                ) : (
-                  <>
-                    <VolumeX className="w-4 h-4" />
-                    <span className="hidden sm:inline">Ambiyans Ses: KAPALI</span>
-                  </>
-                )}
-              </button>
-
               {/* Close Button */}
               <button
-                onClick={() => {
-                  stopAudio();
-                  onClose();
-                }}
+                onClick={onClose}
                 className="w-9 h-9 rounded-full bg-slate-900 hover:bg-slate-800 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors cursor-pointer shrink-0"
                 title="Kapat"
               >
@@ -211,9 +99,8 @@ export default function LoreModal({ isOpen, onClose }) {
 
           {/* Bottom Actions */}
           <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/10 shrink-0">
-            <span className="text-xs font-mono text-slate-400 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-white" />
-              Kurgu: Yunus Emre Gedik
+            <span className="text-xs font-mono text-slate-400">
+              Kurgu & Hikaye: Yunus Emre Gedik
             </span>
 
             <button
@@ -221,7 +108,7 @@ export default function LoreModal({ isOpen, onClose }) {
               className="flex items-center gap-1.5 text-xs font-mono text-gray-400 hover:text-white transition-colors cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              Yeniden Oynat
+              <span>Yeniden Oynat</span>
             </button>
           </div>
         </motion.div>

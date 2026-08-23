@@ -275,9 +275,9 @@ export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
             </div>
 
             <div className="flex flex-col gap-3">
-              <div className="py-1.5 px-4 rounded-none bg-[#111] border border-white/20 text-xs font-mono text-gray-400 flex items-center justify-between">
+              <div className="py-1.5 px-3 rounded-none bg-[#111] border border-white/20 text-gray-400 font-mono text-xs flex items-center justify-center gap-2">
+                <Clock className="w-3.5 h-3.5 text-gray-400 animate-spin" style={{ animationDuration: '4s' }} />
                 <span>Yapım aşamasında</span>
-                <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />
               </div>
 
               {/* Play Game CTA Button */}
