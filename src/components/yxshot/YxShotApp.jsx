@@ -117,9 +117,16 @@ export default function YxShotApp({ onBackToPortfolio }) {
                         <div className="h-2.5 bg-white/10 rounded w-1/4" />
                       </div>
                     </div>
-                    <div className="w-full aspect-[9/12] max-h-[380px] bg-white/10 rounded-2xl flex flex-col items-center justify-center gap-2">
-                      <Sparkles className="w-8 h-8 text-pink-500/40 animate-spin" />
-                      <span className="text-xs text-gray-400 font-mono">Video Bilgileri Çözümleniyor...</span>
+                    <div className="w-full aspect-[9/12] max-h-[380px] bg-white/10 rounded-2xl flex flex-col items-center justify-center gap-3">
+                      <div className="relative flex items-center justify-center">
+                        <div className="absolute inset-0 bg-purple-500/20 blur-xl rounded-full scale-150 animate-pulse" />
+                        <img
+                          src="/favicon.svg"
+                          alt="Yunovax Logo"
+                          className="w-12 h-12 relative z-10 animate-bounce"
+                        />
+                      </div>
+                      <span className="text-xs text-gray-300 font-mono tracking-wider font-semibold">Video Çözümleniyor...</span>
                     </div>
                     <div className="h-12 bg-white/10 rounded-2xl w-full" />
                   </motion.div>

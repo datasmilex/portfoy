@@ -22,8 +22,8 @@ export default function Header({ onBackToPortfolio }) {
 
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 via-pink-600 to-amber-500 p-[1.5px] shadow-lg shadow-pink-500/20">
-              <div className="w-full h-full bg-black rounded-[10px] flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-pink-400" />
+              <div className="w-full h-full bg-black rounded-[10px] flex items-center justify-center p-1.5">
+                <img src="/favicon.svg" alt="Logo" className="w-full h-full object-contain" />
               </div>
             </div>
             <div>

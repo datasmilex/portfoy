@@ -1,6 +1,7 @@
 /**
- * YX Shot - Reels & Video Extraction Service
- * 5-Engine Resilient Multi-Layer Scraper with Base64 Decoders
+ * YX Shot - Client Video Extraction Service
+ * First calls the internal /api/download serverless endpoint (zero CORS issues).
+ * Falls back to client-side multi-engine scrapers if offline.
  */
 
 function decodeB64(str) {
@@ -16,13 +17,39 @@ function decodeB64(str) {
 }
 
 /**
- * Engine 1: oEmbed Official Metadata
+ * Katman 1: Dahili Sunucusuz API Rotaları (/api/download)
+ * Vercel üzerinde çalıştığında tarayıcı CORS kısıtlamalarına takılmadan doğrudan sunucu tarafında çalışır.
  */
-async function fetchOEmbedInfo(shortcode) {
+async function extractViaServerApi(url) {
+  try {
+    const res = await fetch('/api/download', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url }),
+    });
+
+    if (res.ok) {
+      const json = await res.json();
+      if (json && json.success && json.data) {
+        return json;
+      }
+      if (json && json.error) {
+        return json;
+      }
+    }
+  } catch (e) {}
+  return null;
+}
+
+/**
+ * Katman 2: İstemci Tarafı oEmbed
+ */
+async function fetchClientOEmbed(shortcode) {
   try {
     const postUrl = `https://www.instagram.com/reel/${shortcode}/`;
-    const url = `https://api.instagram.com/oembed/?url=${encodeURIComponent(postUrl)}`;
-    const res = await fetch(url);
+    const res = await fetch(`https://api.instagram.com/oembed/?url=${encodeURIComponent(postUrl)}`);
     if (res.ok) {
       return await res.json();
     }
@@ -31,9 +58,9 @@ async function fetchOEmbedInfo(shortcode) {
 }
 
 /**
- * Engine 2: SaveIG
+ * Katman 3: İstemci Tarafı SaveIG
  */
-async function extractFromSaveIG(shortcode) {
+async function extractClientSaveIG(shortcode) {
   try {
     const postUrl = `https://www.instagram.com/reel/${shortcode}/`;
     const res = await fetch('https://v3.saveig.app/api/ajaxSearch', {
@@ -81,9 +108,9 @@ async function extractFromSaveIG(shortcode) {
 }
 
 /**
- * Engine 3: InstaVideoSave
+ * Katman 4: İstemci Tarafı InstaVideoSave
  */
-async function extractFromInstaVideoSave(shortcode) {
+async function extractClientInstaVideoSave(shortcode) {
   try {
     const postUrl = `https://www.instagram.com/reel/${shortcode}/`;
     const res = await fetch('https://instavideosave.net/api/convert', {
@@ -120,68 +147,7 @@ async function extractFromInstaVideoSave(shortcode) {
 }
 
 /**
- * Engine 4: Cobalt Fast API
- */
-async function extractFromCobalt(shortcode) {
-  const cobaltNodes = [
-    'https://cobalt-api.kwiatekm.tokyo',
-    'https://api.cobalt.tools',
-    'https://co.wuk.sh',
-  ];
-
-  const postUrl = `https://www.instagram.com/reel/${shortcode}/`;
-
-  for (const node of cobaltNodes) {
-    try {
-      const res = await fetch(`${node}/`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url: postUrl }),
-      });
-      if (res.ok) {
-        const json = await res.json();
-        if (json.url) {
-          return { videoUrl: json.url };
-        }
-      }
-    } catch (e) {}
-  }
-  return null;
-}
-
-/**
- * Engine 5: Direct Embed Regex Parser
- */
-async function extractFromDirectEmbed(shortcode) {
-  try {
-    const embedUrl = `https://www.instagram.com/p/${shortcode}/embed/captioned/`;
-    const res = await fetch(embedUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-      },
-    });
-
-    if (res.ok) {
-      const html = await res.text();
-      const videoMatch = html.match(/"video_url":"([^"]+)"/) || html.match(/<video[^>]+src="([^">]+)"/);
-      const thumbMatch = html.match(/"display_url":"([^"]+)"/) || html.match(/<meta property="og:image" content="([^">]+)"/);
-      if (videoMatch) {
-        return {
-          videoUrl: videoMatch[1].replace(/\\u0026/g, '&').replace(/\\\//g, '/'),
-          thumbnailUrl: thumbMatch ? thumbMatch[1].replace(/\\u0026/g, '&').replace(/\\\//g, '/') : undefined,
-        };
-      }
-    }
-  } catch (e) {}
-  return null;
-}
-
-/**
- * Main Unified Extraction Function
+ * Ana Çıkarım Fonksiyonu
  */
 export async function extractMedia(urlOrShortcode) {
   if (!urlOrShortcode) {
@@ -200,27 +166,24 @@ export async function extractMedia(urlOrShortcode) {
     return { success: false, error: 'Reels bağlantısı doğrulanamadı.' };
   }
 
-  // Run oEmbed and primary scraper in parallel
+  const cleanUrl = `https://www.instagram.com/reel/${shortcode}/`;
+
+  // 1. Önce dahili sunucusuz rotayı çağır (CORS yok)
+  const serverResult = await extractViaServerApi(cleanUrl);
+  if (serverResult) {
+    return serverResult;
+  }
+
+  // 2. Yedek: İstemci tarafı oEmbed ve SaveIG
   const [oembedData, saveIgResult] = await Promise.all([
-    fetchOEmbedInfo(shortcode),
-    extractFromSaveIG(shortcode),
+    fetchClientOEmbed(shortcode),
+    extractClientSaveIG(shortcode),
   ]);
 
   let extractedVideo = saveIgResult;
 
-  // Fallback 1: InstaVideoSave
   if (!extractedVideo || !extractedVideo.videoUrl) {
-    extractedVideo = await extractFromInstaVideoSave(shortcode);
-  }
-
-  // Fallback 2: Cobalt Node
-  if (!extractedVideo || !extractedVideo.videoUrl) {
-    extractedVideo = await extractFromCobalt(shortcode);
-  }
-
-  // Fallback 3: Direct Embed
-  if (!extractedVideo || !extractedVideo.videoUrl) {
-    extractedVideo = await extractFromDirectEmbed(shortcode);
+    extractedVideo = await extractClientInstaVideoSave(shortcode);
   }
 
   if (!extractedVideo || !extractedVideo.videoUrl) {
