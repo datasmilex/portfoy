@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Pause, Volume2, VolumeX, User, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, User, Film, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import DownloadButton from './DownloadButton';
 
@@ -57,7 +57,7 @@ export default function VideoPreview({ media }) {
           </div>
 
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-400 text-xs font-semibold">
-            <Sparkles className="w-3.5 h-3.5" />
+            <Film className="w-3.5 h-3.5" />
             <span>1080p HD</span>
           </div>
         </div>

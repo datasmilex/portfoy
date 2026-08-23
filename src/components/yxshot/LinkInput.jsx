@@ -119,8 +119,8 @@ export default function LinkInput() {
       <form onSubmit={handleSubmit} className="relative">
         <div className="relative flex items-center p-2 rounded-2xl bg-white/5 border border-white/15 focus-within:border-pink-500/60 focus-within:ring-2 focus-within:ring-pink-500/20 shadow-2xl backdrop-blur-xl transition-all">
           
-          <div className="pl-3 pr-2 text-gray-400">
-            <Sparkles className="w-5 h-5 text-pink-400" />
+          <div className="pl-3 pr-2 flex items-center justify-center">
+            <img src="/favicon.svg" alt="Yunovax" className="w-5 h-5 object-contain" />
           </div>
 
           <input

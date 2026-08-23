@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Sparkles, Shield, Zap, History, HelpCircle } from 'lucide-react';
+import { Sparkles, Shield, Zap, History, HelpCircle, Film } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Toaster } from 'sonner';
 import Header from './Header';
@@ -82,7 +82,7 @@ export default function YxShotApp({ onBackToPortfolio }) {
               {/* Hero Banner */}
               <div className="text-center space-y-3 pt-2 sm:pt-4">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-400 text-xs font-mono mb-1">
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <img src="/favicon.svg" alt="Yunovax" className="w-3.5 h-3.5 object-contain" />
                   <span>Filigransız & Orijinal HD Kalite</span>
                 </div>
 
@@ -164,7 +164,7 @@ export default function YxShotApp({ onBackToPortfolio }) {
 
                 <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
                   <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                    <Sparkles className="w-5 h-5" />
+                    <Film className="w-5 h-5" />
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-white">1080p HD</h4>
