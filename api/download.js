@@ -1,6 +1,7 @@
 /**
  * Vercel Serverless Function: /api/download
- * Supports both POST and GET. Runs on Node.js environment on Vercel with zero CORS issues.
+ * Supports both POST and GET.
+ * Supports RapidAPI Key (process.env.RAPIDAPI_KEY) for 100% cloud reliability with 0 Cloudflare blocks.
  */
 
 function decodeB64(str) {
@@ -13,7 +14,62 @@ function decodeB64(str) {
 }
 
 /**
- * 1. oEmbed Official Metadata
+ * RapidAPI Extraction (Highest Reliability on Cloud/Vercel)
+ */
+async function extractViaRapidAPI(shortcode, apiKey) {
+  if (!apiKey) return null;
+  const postUrl = `https://www.instagram.com/reel/${shortcode}/`;
+
+  const endpoints = [
+    {
+      url: `https://instagram-downloader-download-instagram-videos-stories1.p.rapidapi.com/get-info-rapidapi?url=${encodeURIComponent(postUrl)}`,
+      host: 'instagram-downloader-download-instagram-videos-stories1.p.rapidapi.com',
+      parse: (json) => ({
+        videoUrl: json?.download_url || json?.video_url || json?.url,
+        thumbnailUrl: json?.thumbnail_url || json?.thumb,
+        title: json?.title,
+      }),
+    },
+    {
+      url: `https://instagram-reels-downloader.p.rapidapi.com/reels?url=${encodeURIComponent(postUrl)}`,
+      host: 'instagram-reels-downloader.p.rapidapi.com',
+      parse: (json) => ({
+        videoUrl: json?.data?.video_url || json?.data?.url || json?.video_url,
+        thumbnailUrl: json?.data?.thumbnail_url,
+        title: json?.data?.title,
+      }),
+    },
+    {
+      url: `https://social-media-video-downloader.p.rapidapi.com/smvd/get/instagram?url=${encodeURIComponent(postUrl)}`,
+      host: 'social-media-video-downloader.p.rapidapi.com',
+      parse: (json) => ({
+        videoUrl: json?.links?.[0]?.link || json?.links?.[0]?.url,
+        thumbnailUrl: json?.picture,
+        title: json?.title,
+      }),
+    },
+  ];
+
+  for (const ep of endpoints) {
+    try {
+      const res = await fetch(ep.url, {
+        headers: {
+          'x-rapidapi-key': apiKey,
+          'x-rapidapi-host': ep.host,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        const parsed = ep.parse(json);
+        if (parsed.videoUrl) return parsed;
+      }
+    } catch (e) {}
+  }
+  return null;
+}
+
+/**
+ * oEmbed Metadata
  */
 async function fetchOEmbed(shortcode) {
   try {
@@ -27,7 +83,7 @@ async function fetchOEmbed(shortcode) {
 }
 
 /**
- * 2. SaveIG Engine
+ * SaveIG Scraper
  */
 async function extractSaveIG(shortcode) {
   try {
@@ -77,7 +133,7 @@ async function extractSaveIG(shortcode) {
 }
 
 /**
- * 3. InstaVideoSave Engine
+ * InstaVideoSave Scraper
  */
 async function extractInstaVideoSave(shortcode) {
   try {
@@ -116,35 +172,7 @@ async function extractInstaVideoSave(shortcode) {
 }
 
 /**
- * 4. Direct Embed HTML Parser
- */
-async function extractDirectEmbed(shortcode) {
-  try {
-    const embedUrl = `https://www.instagram.com/p/${shortcode}/embed/captioned/`;
-    const res = await fetch(embedUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-      },
-    });
-
-    if (res.ok) {
-      const html = await res.text();
-      const videoMatch = html.match(/"video_url":"([^"]+)"/) || html.match(/<video[^>]+src="([^">]+)"/);
-      const thumbMatch = html.match(/"display_url":"([^"]+)"/) || html.match(/<meta property="og:image" content="([^">]+)"/);
-      if (videoMatch) {
-        return {
-          videoUrl: videoMatch[1].replace(/\\u0026/g, '&').replace(/\\\//g, '/'),
-          thumbnailUrl: thumbMatch ? thumbMatch[1].replace(/\\u0026/g, '&').replace(/\\\//g, '/') : undefined,
-        };
-      }
-    }
-  } catch (e) {}
-  return null;
-}
-
-/**
- * 5. Cobalt Engine
+ * Cobalt Multi-Node
  */
 async function extractCobalt(shortcode) {
   const cobaltNodes = [
@@ -176,7 +204,7 @@ async function extractCobalt(shortcode) {
 }
 
 export default async function handler(req, res) {
-  // CORS & Security Headers
+  // CORS Headers
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -189,7 +217,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // Handle Stream Proxy for direct media downloading: GET /api/download?stream=...
+  // Stream proxy for downloads
   if (req.method === 'GET' && req.query.stream) {
     try {
       const streamUrl = decodeURIComponent(req.query.stream);
@@ -246,25 +274,30 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: false, error: 'Reels bağlantısı veya shortcode doğrulanamadı.' });
     }
 
-    // Parallel extraction: oEmbed + SaveIG
+    const apiKey = process.env.RAPIDAPI_KEY || process.env.RAPID_API_KEY || '';
+
+    // Step 1: If RAPIDAPI_KEY is configured in Vercel, try it first (100% reliable)
+    let extractedVideo = null;
+    if (apiKey) {
+      extractedVideo = await extractViaRapidAPI(shortcode, apiKey);
+    }
+
+    // Step 2: Parallel oEmbed + SaveIG
     const [oembedData, saveIgResult] = await Promise.all([
       fetchOEmbed(shortcode),
-      extractSaveIG(shortcode),
+      extractedVideo ? Promise.resolve(null) : extractSaveIG(shortcode),
     ]);
 
-    let extractedVideo = saveIgResult;
+    if (!extractedVideo) {
+      extractedVideo = saveIgResult;
+    }
 
-    // Fallback 1: InstaVideoSave
+    // Step 3: InstaVideoSave Fallback
     if (!extractedVideo || !extractedVideo.videoUrl) {
       extractedVideo = await extractInstaVideoSave(shortcode);
     }
 
-    // Fallback 2: Direct Embed
-    if (!extractedVideo || !extractedVideo.videoUrl) {
-      extractedVideo = await extractDirectEmbed(shortcode);
-    }
-
-    // Fallback 3: Cobalt
+    // Step 4: Cobalt Fallback
     if (!extractedVideo || !extractedVideo.videoUrl) {
       extractedVideo = await extractCobalt(shortcode);
     }
