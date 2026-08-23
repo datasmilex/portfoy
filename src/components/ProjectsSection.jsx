@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Skull, AlertTriangle, Smartphone, Globe, Terminal, Clock, Play } from 'lucide-react';
+import { BookOpen, Skull, AlertTriangle, Smartphone, Globe, Terminal, Clock, Play, Video, Sparkles, ArrowUpRight, Download } from 'lucide-react';
 
-export default function ProjectsSection({ onOpenLore }) {
+export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
   const [glitchActive, setGlitchActive] = useState(false);
 
   return (
@@ -21,7 +21,7 @@ export default function ProjectsSection({ onOpenLore }) {
       </div>
 
       {/* Grid of Projects */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8">
         
         {/* PROJECT 1: The Pier: Endless Depths */}
         <motion.div
@@ -160,7 +160,79 @@ export default function ProjectsSection({ onOpenLore }) {
           </div>
         </motion.div>
 
-        {/* PROJECT 3: Muzikors */}
+        {/* PROJECT 3: YX Shot - Shorts & Reels İndirici */}
+        <motion.div
+          whileHover={{ y: -6 }}
+          className="glass-card rounded-none overflow-hidden flex flex-col border border-pink-500/30 hover:border-pink-500/60 relative group transition-all duration-300"
+        >
+          {/* Header Banner */}
+          <div className="relative h-52 bg-[#0A0A0A] border-b border-white/10 overflow-hidden flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/20 via-pink-900/20 to-amber-900/10 opacity-40" />
+            <div className="absolute inset-0 bg-[radial-gradient(#ec4899_1px,transparent_1px)] [background-size:18px_18px] opacity-20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C] via-transparent to-transparent z-10" />
+
+            <div className="relative z-20 text-center p-6 flex flex-col items-center">
+              <div className="w-12 h-12 rounded-none bg-black border border-pink-500/40 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-lg shadow-pink-500/10">
+                <Video className="w-6 h-6 text-pink-400" />
+              </div>
+              <div className="flex items-center gap-1.5 text-xs font-mono tracking-widest text-pink-400 uppercase">
+                <Sparkles className="w-3 h-3" />
+                <span>Web & Mobil Araç</span>
+              </div>
+              <h3 className="text-xl font-bold text-white tracking-wide mt-1">
+                Shorts & Reels İndirici (YX Shot)
+              </h3>
+            </div>
+          </div>
+
+          {/* Body */}
+          <div className="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-pink-500/10 text-pink-300 border border-pink-500/20">
+                  Reels & Shorts
+                </span>
+                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                  1080p HD
+                </span>
+                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                  Fast CDN
+                </span>
+              </div>
+              <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                Sosyal medya Reels ve video içeriklerini filigransız, en yüksek çözünürlükte (HD) ve tek tıkla doğrudan cihazınıza indiren modern, hızlı ve reklamsız video aracı.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <div className="py-1.5 px-4 rounded-none bg-[#111] border border-emerald-500/30 text-xs font-mono text-emerald-400 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Yayında & Kullanıma Hazır</span>
+                </div>
+                <span className="text-[11px] text-gray-400 font-mono">yunovax.com/yxshot</span>
+              </div>
+
+              {/* Action Button: Go to /yxshot */}
+              <a
+                href="/yxshot"
+                onClick={(e) => {
+                  if (onNavigateToYxShot) {
+                    e.preventDefault();
+                    onNavigateToYxShot();
+                  }
+                }}
+                className="w-full py-3 rounded-none bg-gradient-to-r from-pink-600 via-rose-600 to-amber-600 hover:from-pink-500 hover:via-rose-500 hover:to-amber-500 text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 group/btn shadow-lg shadow-pink-500/20 cursor-pointer"
+              >
+                <Download className="w-4 h-4 group-hover/btn:translate-y-0.5 transition-transform" />
+                <span>Uygulamayı Aç (Shorts İndirici)</span>
+                <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+              </a>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* PROJECT 4: Muzikors */}
         <motion.div
           whileHover={{ y: -6 }}
           className="glass-card rounded-none overflow-hidden flex flex-col border border-white/20 relative group"
@@ -209,3 +281,4 @@ export default function ProjectsSection({ onOpenLore }) {
     </section>
   );
 }
+

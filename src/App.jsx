@@ -8,8 +8,12 @@ import CommunitySection from './components/CommunitySection';
 import LoreModal from './components/LoreModal';
 import DeveloperTerminal from './components/DeveloperTerminal';
 import ContactSection from './components/ContactSection';
+import YxShotApp from './components/yxshot/YxShotApp';
 
 export default function App() {
+  const [currentPath, setCurrentPath] = useState(
+    typeof window !== 'undefined' ? window.location.pathname : '/'
+  );
   const [isGravityOn, setIsGravityOn] = useState(false);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isLoreOpen, setIsLoreOpen] = useState(false);
@@ -17,6 +21,21 @@ export default function App() {
   const toggleGravity = () => {
     setIsGravityOn((prev) => !prev);
   };
+
+  const navigate = (path) => {
+    window.history.pushState({}, '', path);
+    setCurrentPath(path);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -28,6 +47,11 @@ export default function App() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  // YX Shot Sub-Application Route (/yxshot)
+  if (currentPath === '/yxshot' || currentPath.startsWith('/yxshot/')) {
+    return <YxShotApp onBackToPortfolio={() => navigate('/')} />;
+  }
 
   return (
     <div className="relative min-h-screen bg-[#050505] text-slate-200 overflow-x-hidden selection:bg-white/20 selection:text-white">
@@ -54,7 +78,10 @@ export default function App() {
             onOpenTerminal={() => setIsTerminalOpen(true)}
           />
 
-          <ProjectsSection onOpenLore={() => setIsLoreOpen(true)} />
+          <ProjectsSection
+            onOpenLore={() => setIsLoreOpen(true)}
+            onNavigateToYxShot={() => navigate('/yxshot')}
+          />
 
           <TechArsenal />
 
@@ -76,3 +103,4 @@ export default function App() {
     </div>
   );
 }
+
