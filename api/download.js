@@ -1,6 +1,6 @@
 /**
- * Vercel Serverless Function: POST /api/download
- * Runs on Node.js server to bypass browser CORS and ISP domain blocking.
+ * Vercel Serverless Function: /api/download
+ * Supports both POST and GET. Runs on Node.js environment on Vercel with zero CORS issues.
  */
 
 function decodeB64(str) {
@@ -12,6 +12,9 @@ function decodeB64(str) {
   }
 }
 
+/**
+ * 1. oEmbed Official Metadata
+ */
 async function fetchOEmbed(shortcode) {
   try {
     const postUrl = `https://www.instagram.com/reel/${shortcode}/`;
@@ -23,6 +26,9 @@ async function fetchOEmbed(shortcode) {
   return null;
 }
 
+/**
+ * 2. SaveIG Engine
+ */
 async function extractSaveIG(shortcode) {
   try {
     const postUrl = `https://www.instagram.com/reel/${shortcode}/`;
@@ -70,6 +76,9 @@ async function extractSaveIG(shortcode) {
   return null;
 }
 
+/**
+ * 3. InstaVideoSave Engine
+ */
 async function extractInstaVideoSave(shortcode) {
   try {
     const postUrl = `https://www.instagram.com/reel/${shortcode}/`;
@@ -106,6 +115,37 @@ async function extractInstaVideoSave(shortcode) {
   return null;
 }
 
+/**
+ * 4. Direct Embed HTML Parser
+ */
+async function extractDirectEmbed(shortcode) {
+  try {
+    const embedUrl = `https://www.instagram.com/p/${shortcode}/embed/captioned/`;
+    const res = await fetch(embedUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      },
+    });
+
+    if (res.ok) {
+      const html = await res.text();
+      const videoMatch = html.match(/"video_url":"([^"]+)"/) || html.match(/<video[^>]+src="([^">]+)"/);
+      const thumbMatch = html.match(/"display_url":"([^"]+)"/) || html.match(/<meta property="og:image" content="([^">]+)"/);
+      if (videoMatch) {
+        return {
+          videoUrl: videoMatch[1].replace(/\\u0026/g, '&').replace(/\\\//g, '/'),
+          thumbnailUrl: thumbMatch ? thumbMatch[1].replace(/\\u0026/g, '&').replace(/\\\//g, '/') : undefined,
+        };
+      }
+    }
+  } catch (e) {}
+  return null;
+}
+
+/**
+ * 5. Cobalt Engine
+ */
 async function extractCobalt(shortcode) {
   const cobaltNodes = [
     'https://cobalt-api.kwiatekm.tokyo',
@@ -136,7 +176,7 @@ async function extractCobalt(shortcode) {
 }
 
 export default async function handler(req, res) {
-  // CORS Headers
+  // CORS & Security Headers
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -146,21 +186,55 @@ export default async function handler(req, res) {
   );
 
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+    return res.status(200).end();
   }
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ success: false, error: 'Method not allowed' });
+  // Handle Stream Proxy for direct media downloading: GET /api/download?stream=...
+  if (req.method === 'GET' && req.query.stream) {
+    try {
+      const streamUrl = decodeURIComponent(req.query.stream);
+      const filename = req.query.filename || 'reels_video.mp4';
+
+      const response = await fetch(streamUrl, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+          'Referer': 'https://www.instagram.com/',
+        },
+      });
+
+      if (!response.ok) {
+        return res.status(response.status).json({ error: 'Stream error' });
+      }
+
+      res.setHeader('Content-Type', 'video/mp4');
+      res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(filename)}"`);
+      
+      const buffer = await response.arrayBuffer();
+      return res.status(200).send(Buffer.from(buffer));
+    } catch (e) {
+      return res.status(500).json({ error: 'Stream failed' });
+    }
   }
 
   try {
-    const { url } = req.body || {};
-    if (!url || typeof url !== 'string') {
+    let rawUrl = '';
+    if (req.method === 'POST') {
+      let body = req.body;
+      if (typeof body === 'string') {
+        try {
+          body = JSON.parse(body);
+        } catch (e) {}
+      }
+      rawUrl = body?.url || '';
+    } else if (req.method === 'GET') {
+      rawUrl = req.query?.url || '';
+    }
+
+    if (!rawUrl || typeof rawUrl !== 'string') {
       return res.status(200).json({ success: false, error: 'Geçerli bir video bağlantısı gönderilmelidir.' });
     }
 
-    let shortcode = url.trim();
+    let shortcode = rawUrl.trim();
     const match = shortcode.match(/(?:reel|reels|p|tv|share\/(?:reel|p))\/([A-Za-z0-9_-]+)/i);
     if (match) {
       shortcode = match[1];
@@ -169,10 +243,10 @@ export default async function handler(req, res) {
     }
 
     if (!shortcode || shortcode.length < 3) {
-      return res.status(200).json({ success: false, error: 'Reels bağlantısı doğrulanamadı.' });
+      return res.status(200).json({ success: false, error: 'Reels bağlantısı veya shortcode doğrulanamadı.' });
     }
 
-    // Parallel fetch: oEmbed + SaveIG
+    // Parallel extraction: oEmbed + SaveIG
     const [oembedData, saveIgResult] = await Promise.all([
       fetchOEmbed(shortcode),
       extractSaveIG(shortcode),
@@ -180,10 +254,17 @@ export default async function handler(req, res) {
 
     let extractedVideo = saveIgResult;
 
+    // Fallback 1: InstaVideoSave
     if (!extractedVideo || !extractedVideo.videoUrl) {
       extractedVideo = await extractInstaVideoSave(shortcode);
     }
 
+    // Fallback 2: Direct Embed
+    if (!extractedVideo || !extractedVideo.videoUrl) {
+      extractedVideo = await extractDirectEmbed(shortcode);
+    }
+
+    // Fallback 3: Cobalt
     if (!extractedVideo || !extractedVideo.videoUrl) {
       extractedVideo = await extractCobalt(shortcode);
     }
@@ -209,7 +290,7 @@ export default async function handler(req, res) {
       caption: rawTitle,
       thumbnailUrl,
       videoUrl,
-      downloadUrl: videoUrl,
+      downloadUrl: `/api/download?stream=${encodeURIComponent(videoUrl)}&filename=${username}_${shortcode}.mp4`,
       author: {
         username,
       },
