@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Skull, AlertTriangle, Smartphone, Globe, Terminal, Clock, Play, Video, ArrowUpRight, Download } from 'lucide-react';
+import { BookOpen, Skull, AlertTriangle, Smartphone, Globe, Terminal, Clock, Play, Video, ArrowUpRight, Download, Gamepad2 } from 'lucide-react';
 
 export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
   const [glitchActive, setGlitchActive] = useState(false);
@@ -22,6 +22,65 @@ export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
 
       {/* Grid of Projects (Ordered: YX Shot -> Muzikors -> The Pier -> YDCO) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8">
+        
+        {/* PROJECT 0: YX Games */}
+        <motion.div
+          whileHover={{ y: -6 }}
+          className="glass-card rounded-none overflow-hidden flex flex-col border border-white/20 relative group transition-all duration-300"
+        >
+          {/* Header Banner */}
+          <div className="relative h-52 bg-[#0A0A0A] border-b border-white/10 overflow-hidden flex items-center justify-center">
+            <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:16px_16px] animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C] via-transparent to-transparent z-10" />
+            
+            <div className="relative z-20 text-center p-6 flex flex-col items-center">
+              <div className="w-12 h-12 rounded-none bg-black border border-white/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <Gamepad2 className="w-6 h-6 text-white" />
+              </div>
+              <span className="text-xs font-mono tracking-widest text-gray-400 uppercase">Web Oyun Platformu</span>
+              <h3 className="text-xl font-bold text-white tracking-wide mt-1">YX Games</h3>
+            </div>
+          </div>
+
+          {/* Body */}
+          <div className="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                  HTML5
+                </span>
+                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                  Web Games
+                </span>
+              </div>
+              <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                Yüzlerce HTML5 tabanlı web oyununu tek bir çatı altında toplayan, tarayıcı üzerinden ücretsiz oynanabilen modern oyun platformu.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <div className="py-1.5 px-4 rounded-none bg-[#111] border border-emerald-500/30 text-xs font-mono text-emerald-400 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Yayında & Canlı</span>
+                </div>
+                <span className="text-[11px] text-gray-400 font-mono">yxgames.site</span>
+              </div>
+
+              {/* Action Button: Visit yxgames.site */}
+              <a
+                href="https://yxgames.site"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3 rounded-none bg-white hover:bg-gray-200 text-black font-semibold text-xs transition-all flex items-center justify-center gap-2 group/btn cursor-pointer"
+              >
+                <Globe className="w-4 h-4 text-black" />
+                <span>Oyun Oyna (yxgames.site)</span>
+                <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+              </a>
+            </div>
+          </div>
+        </motion.div>
         
         {/* PROJECT 1: YX Shot - Shorts & Reels İndirici */}
         <motion.div
