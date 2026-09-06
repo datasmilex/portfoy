@@ -154,7 +154,7 @@ SYSTEM MATRIX ACTIVE: WAKE UP NEO...`,
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/95 overflow-y-auto">
         <motion.div
           key={shakeKey}
           initial={{ opacity: 0, scale: 0.95, y: 10 }}
@@ -194,9 +194,9 @@ SYSTEM MATRIX ACTIVE: WAKE UP NEO...`,
             <div className="p-6 sm:p-8 flex flex-col items-center justify-center text-center flex-1 overflow-y-auto">
               <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-none bg-black border border-white/20 flex items-center justify-center mb-4 sm:mb-6 shadow-none">
                 {authStatus === 'success' ? (
-                  <Unlock className="w-6 h-6 sm:w-7 sm:h-7 text-white animate-bounce" />
+                  <Unlock className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 ) : authStatus === 'error' ? (
-                  <ShieldAlert className="w-6 h-6 sm:w-7 sm:h-7 text-white animate-pulse" />
+                  <ShieldAlert className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 ) : (
                   <Lock className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 )}
@@ -232,13 +232,13 @@ SYSTEM MATRIX ACTIVE: WAKE UP NEO...`,
                 </div>
 
                 {authStatus === 'error' && (
-                  <div className="text-xs text-white font-bold tracking-wide animate-pulse">
+                  <div className="text-xs text-white font-bold tracking-wide">
                     ACCESS DENIED - INVALID PASSCODE
                   </div>
                 )}
 
                 {authStatus === 'success' && (
-                  <div className="text-xs text-white font-bold tracking-wide animate-bounce">
+                  <div className="text-xs text-white font-bold tracking-wide">
                     ACCESS GRANTED - UNLOCKING TERMINAL...
                   </div>
                 )}
