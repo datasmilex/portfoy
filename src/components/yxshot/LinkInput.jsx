@@ -117,7 +117,7 @@ export default function LinkInput() {
   return (
     <div className="w-full max-w-2xl mx-auto">
       <form onSubmit={handleSubmit} className="relative">
-        <div className="relative flex items-center p-2 rounded-2xl bg-white/5 border border-white/15 focus-within:border-pink-500/60 focus-within:ring-2 focus-within:ring-pink-500/20 shadow-2xl backdrop-blur-xl transition-all">
+        <div className="relative flex items-center p-1.5 rounded-xl bg-zinc-900 border border-zinc-800 focus-within:border-zinc-500 focus-within:ring-1 focus-within:ring-zinc-500 shadow-sm transition-colors">
           
           <div className="pl-3 pr-2 flex items-center justify-center">
             <img src="/favicon.svg" alt="Yunovax" className="w-5 h-5 object-contain" />
@@ -130,7 +130,7 @@ export default function LinkInput() {
             onPaste={handleNativePaste}
             placeholder="Reels veya video linkini yapıştırın..."
             disabled={isLoading}
-            className="flex-1 bg-transparent border-none outline-none text-sm sm:text-base text-white placeholder-gray-500 disabled:opacity-50 py-2.5 px-1"
+            className="flex-1 bg-transparent border-none outline-none text-sm sm:text-base text-white placeholder-zinc-500 disabled:opacity-50 py-2.5 px-1"
           />
 
           {inputUrl && (
@@ -140,7 +140,7 @@ export default function LinkInput() {
                 setInputUrl('');
                 setErrorMessage(null);
               }}
-              className="p-1.5 text-gray-400 hover:text-white transition-colors mr-1"
+              className="p-1.5 text-zinc-400 hover:text-white transition-colors mr-1 cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -150,7 +150,7 @@ export default function LinkInput() {
             type="button"
             onClick={handlePaste}
             disabled={isLoading}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-gray-300 hover:text-white border border-white/10 transition-all mr-2"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 text-xs font-mono text-zinc-300 hover:text-white border border-zinc-700 transition-colors mr-2 cursor-pointer"
           >
             <Clipboard className="w-3.5 h-3.5" />
             <span>Yapıştır</span>
@@ -159,11 +159,11 @@ export default function LinkInput() {
           <button
             type="submit"
             disabled={isLoading || !inputUrl}
-            className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-pink-600 via-rose-600 to-amber-600 hover:from-pink-500 hover:via-rose-500 hover:to-amber-500 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-pink-500/25 transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs sm:text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-sm"
           >
             {isLoading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin text-zinc-950" />
                 <span className="hidden sm:inline">İşleniyor</span>
               </>
             ) : (

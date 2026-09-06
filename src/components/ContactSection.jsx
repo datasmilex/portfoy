@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Copy, Check, Sparkles } from 'lucide-react';
+import { Mail, Copy, Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import SocialLinks from './SocialLinks';
 
@@ -23,15 +23,11 @@ export default function ContactSection() {
   };
 
   return (
-    <footer id="contact" className="relative z-10 py-20 px-4 md:px-8 border-t border-white/10 glass-panel mt-20">
+    <footer id="contact" className="relative z-10 py-20 px-4 md:px-8 border-t border-zinc-800/80 bg-zinc-950 mt-20">
       <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
         
-        {/* Section Header: İletişim Bilgileri */}
-        <span className="px-3.5 py-1.5 rounded-none bg-[#111] border border-white/20 text-gray-300 font-mono text-xs uppercase tracking-widest mb-4">
-          Birlikte Çalışalım
-        </span>
-
-        <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-6">
+        {/* Section Header */}
+        <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-6">
           İletişim Bilgileri
         </h2>
 
@@ -44,19 +40,19 @@ export default function ContactSection() {
         <div className="relative mb-12">
           <button
             onClick={handleCopy}
-            className="group relative flex items-center gap-3 px-6 py-4 rounded-none bg-[#111] border border-white/20 hover:border-white hover:bg-white/5 text-white font-mono text-sm md:text-base shadow-none transition-all duration-300 cursor-pointer"
+            className="group relative flex items-center gap-3 px-6 py-4 rounded-none bg-zinc-900 border border-zinc-800 hover:border-zinc-600 hover:bg-zinc-800/50 text-white font-mono text-sm md:text-base transition-colors cursor-pointer"
           >
-            <Mail className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
-            <span className="font-semibold tracking-wide">{EMAIL}</span>
-            <div className="ml-2 pl-3 border-l border-white/20 flex items-center gap-1.5 text-xs text-gray-400">
+            <Mail className="w-5 h-5 text-zinc-300 group-hover:scale-105 transition-transform" />
+            <span className="font-medium tracking-wide">{EMAIL}</span>
+            <div className="ml-2 pl-3 border-l border-zinc-700 flex items-center gap-1.5 text-xs text-zinc-400">
               {copied ? (
                 <>
-                  <Check className="w-4 h-4 text-white" />
-                  <span className="text-white font-sans font-bold">Kopyalandı!</span>
+                  <Check className="w-4 h-4 text-emerald-400" />
+                  <span className="text-emerald-400 font-sans font-semibold">Kopyalandı!</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-4 h-4 text-gray-400 group-hover:text-white" />
+                  <Copy className="w-4 h-4 text-zinc-400 group-hover:text-white" />
                   <span className="font-sans">Kopyala</span>
                 </>
               )}
@@ -70,23 +66,23 @@ export default function ContactSection() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute -top-12 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-none bg-white text-black font-sans font-bold text-xs shadow-lg flex items-center gap-1.5"
+                className="absolute -top-12 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-none bg-white text-zinc-950 font-sans font-semibold text-xs shadow-lg flex items-center gap-1.5"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <Check className="w-3.5 h-3.5 text-zinc-950" />
                 E-posta adresi panoya kopyalandı!
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Footer */}
-        <div className="pt-8 border-t border-white/10 w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
+        {/* Footer Bottom */}
+        <div className="pt-8 border-t border-zinc-800/80 w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-400">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-none bg-white" />
             <span>© 2026 Yunus Emre Gedik (Yunovax). Tüm Hakları Saklıdır.</span>
           </div>
 
-          <div className="text-gray-500 font-medium hover:text-white transition-colors">
+          <div className="text-zinc-500 font-normal hover:text-zinc-300 transition-colors">
             buraya bakacağını biliyordum :)
           </div>
         </div>

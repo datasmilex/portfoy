@@ -9,115 +9,106 @@ export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
     <section id="projects" className="relative z-10 py-24 px-4 md:px-8 max-w-7xl mx-auto">
       {/* Section Header */}
       <div className="flex flex-col items-center text-center mb-16">
-        <span className="px-3 py-1 rounded-none bg-[#111] border border-white/20 text-gray-300 font-mono text-xs uppercase tracking-widest mb-3">
-          Öne Çıkan Çalışmalar
-        </span>
-        <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+        <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
           İnteraktif Deneyimler & Ürünler
         </h2>
-        <p className="text-slate-400 text-sm md:text-base max-w-xl mt-3">
-          Roblox üzerindeki psikolojik atmosferlerden web ve mobil platformlardaki özel çözümlere.
+        <p className="text-zinc-400 text-sm md:text-base max-w-xl mt-3 text-balance">
+          Roblox üzerindeki psikolojik atmosferlerden web ve mobil platformlardaki özel dijital çözümlere.
         </p>
       </div>
 
-      {/* Grid of Projects (Ordered: YX Shot -> Muzikors -> The Pier -> YDCO) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8">
+      {/* Grid of Projects */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         
         {/* PROJECT 0: YX Games */}
         <motion.div
-          whileHover={{ y: -6 }}
-          className="glass-card rounded-none overflow-hidden flex flex-col border border-white/20 relative group transition-all duration-300"
+          whileHover={{ y: -4 }}
+          className="rounded-none bg-zinc-900/40 border border-zinc-800/80 hover:border-zinc-600/80 transition-all flex flex-col justify-between"
         >
           {/* Header Banner */}
-          <div className="relative h-52 bg-[#0A0A0A] border-b border-white/10 overflow-hidden flex items-center justify-center">
-            <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:16px_16px] animate-pulse" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C] via-transparent to-transparent z-10" />
-            
-            <div className="relative z-20 text-center p-6 flex flex-col items-center">
-              <div className="w-12 h-12 rounded-none bg-black border border-white/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <Gamepad2 className="w-6 h-6 text-white" />
+          <div className="p-7 border-b border-zinc-800/80 bg-zinc-950/60 flex items-center justify-between">
+            <div className="flex items-center gap-3.5">
+              <Gamepad2 className="w-6 h-6 text-zinc-300" />
+              <div>
+                <h3 className="text-xl font-bold text-white tracking-wide">YX Games</h3>
+                <span className="text-xs font-mono text-zinc-400">Web Oyun Platformu</span>
               </div>
-              <span className="text-xs font-mono tracking-widest text-gray-400 uppercase">Web Oyun Platformu</span>
-              <h3 className="text-xl font-bold text-white tracking-wide mt-1">YX Games</h3>
             </div>
+            <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/70 text-zinc-300 border border-zinc-700/60">
+              Web
+            </span>
           </div>
 
           {/* Body */}
           <div className="p-6 flex-1 flex flex-col justify-between">
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   HTML5
                 </span>
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   Web Games
                 </span>
               </div>
-              <p className="text-slate-300 text-sm leading-relaxed mb-6">
+              <p className="text-zinc-300 text-sm leading-relaxed mb-6">
                 Yüzlerce HTML5 tabanlı web oyununu tek bir çatı altında toplayan, tarayıcı üzerinden ücretsiz oynanabilen modern oyun platformu.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3">
-              {/* Action Button: Visit yxgames.site */}
+            <div className="flex flex-col gap-3 pt-2">
               <a
                 href="https://yxgames.site"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3 rounded-none bg-white hover:bg-gray-200 text-black font-semibold text-xs transition-all flex items-center justify-center gap-2 group/btn cursor-pointer"
+                className="w-full py-3 bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               >
-                <Globe className="w-4 h-4 text-black" />
+                <Globe className="w-4 h-4 text-zinc-950" />
                 <span>Oyun Oyna (yxgames.site)</span>
-                <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
           </div>
         </motion.div>
         
-        {/* PROJECT 1: YX Shot - Shorts & Reels İndirici */}
+        {/* PROJECT 1: YX Shot */}
         <motion.div
-          whileHover={{ y: -6 }}
-          className="glass-card rounded-none overflow-hidden flex flex-col border border-white/20 relative group transition-all duration-300"
+          whileHover={{ y: -4 }}
+          className="rounded-none bg-zinc-900/40 border border-zinc-800/80 hover:border-zinc-600/80 transition-all flex flex-col justify-between"
         >
           {/* Header Banner */}
-          <div className="relative h-52 bg-[#0A0A0A] border-b border-white/10 overflow-hidden flex items-center justify-center">
-            <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:16px_16px] animate-pulse" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C] via-transparent to-transparent z-10" />
-
-            <div className="relative z-20 text-center p-6 flex flex-col items-center">
-              <div className="w-12 h-12 rounded-none bg-black border border-white/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <Video className="w-6 h-6 text-white" />
+          <div className="p-7 border-b border-zinc-800/80 bg-zinc-950/60 flex items-center justify-between">
+            <div className="flex items-center gap-3.5">
+              <Video className="w-6 h-6 text-zinc-300" />
+              <div>
+                <h3 className="text-xl font-bold text-white tracking-wide">YX Shot</h3>
+                <span className="text-xs font-mono text-zinc-400">Web & Mobil Araç</span>
               </div>
-              <span className="text-xs font-mono tracking-widest text-gray-400 uppercase">
-                Web & Mobil Araç
-              </span>
-              <h3 className="text-xl font-bold text-white tracking-wide mt-1">
-                YX Shot
-              </h3>
             </div>
+            <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/70 text-zinc-300 border border-zinc-700/60">
+              Tool
+            </span>
           </div>
 
           {/* Body */}
           <div className="p-6 flex-1 flex flex-col justify-between">
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   Reels & Shorts
                 </span>
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   1080p HD
                 </span>
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   Fast CDN
                 </span>
               </div>
-              <p className="text-slate-300 text-sm leading-relaxed mb-6">
+              <p className="text-zinc-300 text-sm leading-relaxed mb-6">
                 Sosyal medya Reels ve video içeriklerini filigransız ve yüksek çözünürlükte indiren web aracı.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3">
-              {/* Action Button: Go to /yxshot */}
+            <div className="flex flex-col gap-3 pt-2">
               <a
                 href="/yxshot"
                 onClick={(e) => {
@@ -126,11 +117,11 @@ export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
                     onNavigateToYxShot();
                   }
                 }}
-                className="w-full py-3 rounded-none bg-white hover:bg-gray-200 text-black font-semibold text-xs transition-all flex items-center justify-center gap-2 group/btn cursor-pointer"
+                className="w-full py-3 bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               >
-                <Download className="w-4 h-4 text-black" />
+                <Download className="w-4 h-4 text-zinc-950" />
                 <span>Uygulamayı Aç (yxshot)</span>
-                <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -138,53 +129,49 @@ export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
 
         {/* PROJECT 2: Muzikors */}
         <motion.div
-          whileHover={{ y: -6 }}
-          className="glass-card rounded-none overflow-hidden flex flex-col border border-white/20 relative group transition-all duration-300"
+          whileHover={{ y: -4 }}
+          className="rounded-none bg-zinc-900/40 border border-zinc-800/80 hover:border-zinc-600/80 transition-all flex flex-col justify-between"
         >
           {/* Header Banner */}
-          <div className="relative h-52 bg-[#0A0A0A] border-b border-white/10 overflow-hidden flex items-center justify-center">
-            <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:16px_16px] animate-pulse" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C] via-transparent to-transparent z-10" />
-
-            <div className="relative z-20 text-center p-6 flex flex-col items-center">
-              <div className="w-12 h-12 rounded-none bg-black border border-white/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <Smartphone className="w-6 h-6 text-white" />
+          <div className="p-7 border-b border-zinc-800/80 bg-zinc-950/60 flex items-center justify-between">
+            <div className="flex items-center gap-3.5">
+              <Smartphone className="w-6 h-6 text-zinc-300" />
+              <div>
+                <h3 className="text-xl font-bold text-white tracking-wide">Muzikors</h3>
+                <span className="text-xs font-mono text-zinc-400">Modern Müzik Platformu</span>
               </div>
-              <span className="text-xs font-mono tracking-widest text-gray-400 uppercase">Modern Müzik Platformu</span>
-              <h3 className="text-xl font-bold text-white tracking-wide mt-1">Muzikors</h3>
             </div>
+            <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/70 text-zinc-300 border border-zinc-700/60">
+              Cross-Platform
+            </span>
           </div>
 
           {/* Body */}
           <div className="p-6 flex-1 flex flex-col justify-between">
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   Mobile & Web
                 </span>
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   Audio Streaming
                 </span>
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
-                  Cross-Platform
-                </span>
               </div>
-              <p className="text-slate-300 text-sm leading-relaxed mb-6">
+              <p className="text-zinc-300 text-sm leading-relaxed mb-6">
                 Müzik keşfini ve dinleme deneyimini modern bir arayüzle buluşturan yeni nesil cross-platform müzik platformu.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3">
-              {/* Action Button: Visit muzikors.com.tr */}
+            <div className="flex flex-col gap-3 pt-2">
               <a
                 href="https://muzikors.com.tr"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3 rounded-none bg-white hover:bg-gray-200 text-black font-semibold text-xs transition-all flex items-center justify-center gap-2 group/btn cursor-pointer"
+                className="w-full py-3 bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               >
-                <Globe className="w-4 h-4 text-black" />
+                <Globe className="w-4 h-4 text-zinc-950" />
                 <span>Siteye Git (muzikors.com.tr)</span>
-                <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -192,57 +179,61 @@ export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
 
         {/* PROJECT 3: The Pier: Endless Depths */}
         <motion.div
-          whileHover={{ y: -6 }}
-          className="glass-card rounded-none overflow-hidden flex flex-col border border-white/20 relative group"
+          whileHover={{ y: -4 }}
+          className="rounded-none bg-zinc-900/40 border border-zinc-800/80 hover:border-zinc-600/80 transition-all flex flex-col justify-between"
         >
           {/* Header Banner */}
-          <div className="relative h-52 bg-[#0A0A0A] border-b border-white/10 overflow-hidden flex items-center justify-center">
-            <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:16px_16px] animate-pulse" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C] via-transparent to-transparent z-10" />
-            
-            <div className="relative z-20 text-center p-6 flex flex-col items-center">
-              <div className="w-12 h-12 rounded-none bg-black border border-white/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <Skull className="w-6 h-6 text-white" />
+          <div className="p-7 border-b border-zinc-800/80 bg-zinc-950/60 flex items-center justify-between">
+            <div className="flex items-center gap-3.5">
+              <Skull className="w-6 h-6 text-zinc-300" />
+              <div>
+                <h3 className="text-xl font-bold text-white tracking-wide">The Pier: Endless Depths</h3>
+                <span className="text-xs font-mono text-zinc-400">Roblox Experience</span>
               </div>
-              <span className="text-xs font-mono tracking-widest text-gray-400 uppercase">Roblox Experience</span>
-              <h3 className="text-xl font-bold text-white tracking-wide mt-1">The Pier: Endless Depths</h3>
             </div>
+            <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/70 text-zinc-300 border border-zinc-700/60">
+              Psychological
+            </span>
           </div>
 
           {/* Body */}
           <div className="p-6 flex-1 flex flex-col justify-between">
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   Psychological Horror
                 </span>
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   Lua Scripting
                 </span>
               </div>
-              <p className="text-slate-300 text-sm leading-relaxed mb-6">
-                Sisle kaplı sonsuz bir okyanusun ortasında, nereye uzandığı bilinmeyen ahşap bir iskelede geçen, klostrofobik atmosferi ve psikolojik anlatımıyla oyuncuyu içine çeken Roblox deneyimi.
+              <p className="text-zinc-300 text-sm leading-relaxed mb-6">
+                Sisle kaplı sonsuz bir okyanusun ortasında, nereye uzandığı bilinmeyen ahşap bir iskelede geçen klostrofobik atmosferik Roblox deneyimi.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3">
-              {/* Action buttons: Play Game + Read Lore */}
+            <div className="flex flex-col gap-3 pt-2">
+              <div className="py-2 px-3 bg-zinc-950 border border-zinc-800/80 text-zinc-400 font-mono text-xs flex items-center justify-center gap-2">
+                <Clock className="w-3.5 h-3.5 text-zinc-400 animate-spin" style={{ animationDuration: '4s' }} />
+                <span>Yapım aşamasında</span>
+              </div>
+
               <div className="grid grid-cols-2 gap-2">
                 <a
                   href="https://www.roblox.com/games/104035534286177/The-Pier"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="py-3 px-3 rounded-none bg-white hover:bg-gray-200 text-black font-semibold text-xs transition-all flex items-center justify-center gap-1.5 group/play"
+                  className="py-3 px-3 bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 shadow-sm"
                 >
-                  <Play className="w-3.5 h-3.5 fill-current group-hover/play:scale-110 transition-transform" />
+                  <Play className="w-3.5 h-3.5 fill-current" />
                   <span>Oyuna Git</span>
                 </a>
 
                 <button
                   onClick={onOpenLore}
-                  className="py-3 px-3 rounded-none bg-[#111] border border-white/20 text-white font-semibold text-xs hover:bg-white/10 transition-all flex items-center justify-center gap-1.5 group/btn cursor-pointer"
+                  className="py-3 px-3 bg-zinc-800/80 border border-zinc-700/80 text-white font-semibold text-xs hover:bg-zinc-700 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-white group-hover/btn:scale-110 transition-transform" />
+                  <BookOpen className="w-3.5 h-3.5 text-white" />
                   <span>Lore Oku</span>
                 </button>
               </div>
@@ -250,34 +241,32 @@ export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
           </div>
         </motion.div>
 
-        {/* PROJECT 4: YDCO (Yunovax's Difficulty Chart Obby) */}
+        {/* PROJECT 4: YDCO */}
         <motion.div
-          whileHover={{ y: -6 }}
+          whileHover={{ y: -4 }}
           onMouseEnter={() => setGlitchActive(true)}
           onMouseLeave={() => setGlitchActive(false)}
-          className={`glass-card rounded-none overflow-hidden flex flex-col border transition-all duration-300 relative group ${
-            glitchActive ? 'border-white bg-[#111]' : 'border-white/20'
+          className={`rounded-none bg-zinc-900/40 border transition-all flex flex-col justify-between relative ${
+            glitchActive ? 'border-zinc-500 bg-zinc-900/60' : 'border-zinc-800/80'
           }`}
         >
-          {/* Glitch Header Banner */}
-          <div className="relative h-52 bg-[#0A0A0A] border-b border-white/10 overflow-hidden flex items-center justify-center">
-            <div className="absolute inset-0 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:20px_20px] opacity-20" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C] via-transparent to-transparent z-10" />
-
-            <div className="relative z-20 text-center p-6 flex flex-col items-center">
-              <div className="w-12 h-12 rounded-none bg-black border border-white/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <AlertTriangle className="w-6 h-6 text-white" />
+          {/* Header Banner */}
+          <div className="p-7 border-b border-zinc-800/80 bg-zinc-950/60 flex items-center justify-between relative">
+            <div className="flex items-center gap-3.5">
+              <AlertTriangle className="w-6 h-6 text-zinc-300" />
+              <div>
+                <h3 className="text-xl font-bold text-white tracking-wide">YDCO - Difficulty Chart</h3>
+                <span className="text-xs font-mono text-zinc-400">Meta-Horror Obby</span>
               </div>
-              <span className="text-xs font-mono tracking-widest text-gray-400 uppercase">Meta-Horror Obby</span>
-              <h3 className="text-xl font-bold tracking-wide mt-1 text-white">
-                YDCO - Difficulty Chart
-              </h3>
             </div>
+            <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/70 text-zinc-300 border border-zinc-700/60">
+              Hardcore
+            </span>
 
             {/* Terminal Glitch Popup Message */}
             {glitchActive && (
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-none bg-black border border-white text-white font-mono text-xs flex items-center gap-2 shadow-2xl animate-bounce">
-                <Terminal className="w-3.5 h-3.5" />
+              <div className="absolute top-2 right-4 z-30 px-3 py-1 bg-black border border-zinc-600 text-zinc-200 font-mono text-xs flex items-center gap-2 shadow-xl">
+                <Terminal className="w-3.5 h-3.5 text-zinc-400" />
                 <span>"You shouldn't be here."</span>
               </div>
             )}
@@ -287,30 +276,34 @@ export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
           <div className="p-6 flex-1 flex flex-col justify-between">
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   Meta Horror
                 </span>
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   Advanced Parkour
                 </span>
-                <span className="px-2.5 py-1 rounded-none text-xs font-mono bg-[#111] text-gray-300 border border-white/10">
+                <span className="px-2.5 py-1 text-xs font-mono bg-zinc-800/60 text-zinc-300 border border-zinc-700/50">
                   Lua
                 </span>
               </div>
-              <p className="text-slate-300 text-sm leading-relaxed mb-6">
+              <p className="text-zinc-300 text-sm leading-relaxed mb-6">
                 Standart obby mekaniklerini bozan, seviyeler ilerledikçe kendi kod dünyasını sorgulatan meta-korku ve zorluk parkuru deneyimi.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3">
-              {/* Play Game CTA Button */}
+            <div className="flex flex-col gap-3 pt-2">
+              <div className="py-2 px-3 bg-zinc-950 border border-zinc-800/80 text-zinc-400 font-mono text-xs flex items-center justify-center gap-2">
+                <Clock className="w-3.5 h-3.5 text-zinc-400 animate-spin" style={{ animationDuration: '4s' }} />
+                <span>Yapım aşamasında</span>
+              </div>
+
               <a
                 href="https://www.roblox.com/games/97672403225593/Yunovaxs-Difficulty-Chart-Obby"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3 rounded-none bg-white hover:bg-gray-200 text-black font-semibold text-xs transition-all flex items-center justify-center gap-1.5 group/play"
+                className="w-full py-3 bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 shadow-sm"
               >
-                <Play className="w-3.5 h-3.5 fill-current group-hover/play:scale-110 transition-transform" />
+                <Play className="w-3.5 h-3.5 fill-current" />
                 <span>Oyuna Git (Roblox)</span>
               </a>
             </div>

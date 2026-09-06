@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { Sparkles, Info, ArrowLeft, ShieldCheck, Zap } from 'lucide-react';
+import { Info, ArrowLeft, ShieldCheck, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Header({ onBackToPortfolio }) {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-xl bg-black/60 border-b border-white/10 transition-all">
+    <header className="sticky top-0 z-40 backdrop-blur-md bg-zinc-950/85 border-b border-zinc-800/80 transition-all">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         
         {/* Left: Back to Portfolio & Logo */}
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToPortfolio}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-gray-300 hover:text-white transition-all group"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900/60 hover:bg-zinc-800 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white transition-colors group cursor-pointer"
             title="Yunovax Portföy'e Geri Dön"
           >
             <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
@@ -21,20 +21,16 @@ export default function Header({ onBackToPortfolio }) {
           </button>
 
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 via-pink-600 to-amber-500 p-[1.5px] shadow-lg shadow-pink-500/20">
-              <div className="w-full h-full bg-black rounded-[10px] flex items-center justify-center p-1.5">
-                <img src="/favicon.svg" alt="Logo" className="w-full h-full object-contain" />
-              </div>
+            <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center p-1.5">
+              <img src="/favicon.svg" alt="Logo" className="w-full h-full object-contain" />
             </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-base sm:text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-rose-400 to-amber-300">
-                  YX SHOT
-                </span>
-                <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-pink-500/10 border border-pink-500/20 text-pink-400">
-                  HD
-                </span>
-              </div>
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-base tracking-tight text-white">
+                YX Shot
+              </span>
+              <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-zinc-800 border border-zinc-700 text-zinc-300">
+                HD
+              </span>
             </div>
           </div>
         </div>
@@ -43,7 +39,7 @@ export default function Header({ onBackToPortfolio }) {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsInfoOpen(true)}
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-400 hover:text-white transition-colors"
+            className="p-2 rounded-lg bg-zinc-900/60 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
             title="Uygulama Hakkında"
           >
             <Info className="w-4 h-4" />
@@ -59,38 +55,38 @@ export default function Header({ onBackToPortfolio }) {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="w-full max-w-md bg-[#0A0A0C] border border-white/20 rounded-2xl p-6 shadow-2xl relative"
+              className="w-full max-w-md bg-zinc-950 border border-zinc-800 rounded-xl p-6 shadow-2xl relative"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2.5 rounded-xl bg-pink-500/10 text-pink-400 border border-pink-500/20">
+                <div className="p-2.5 rounded-lg bg-zinc-900 text-zinc-300 border border-zinc-800">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-white">YX Shot Hakkında</h3>
-                  <p className="text-xs text-gray-400 font-mono">Reels & Video İndirme Aracı</p>
+                  <p className="text-xs text-zinc-400 font-mono">Reels & Video İndirme Aracı</p>
                 </div>
               </div>
 
-              <div className="space-y-3 text-xs sm:text-sm text-gray-300 leading-relaxed">
+              <div className="space-y-3 text-sm text-zinc-300 leading-relaxed">
                 <p>
-                  YX Shot, sosyal medya Reels ve video içeriklerini filigransız, en yüksek kalitede (HD 1080p) cihazınıza doğrudan indirmenizi sağlayan modern ve reklamsız bir araçtır.
+                  YX Shot, sosyal medya Reels ve video içeriklerini filigransız, yüksek kalitede (HD 1080p) cihazınıza doğrudan indirmenizi sağlayan modern ve reklamsız bir araçtır.
                 </p>
-                <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-2">
-                  <div className="flex items-center gap-2 text-pink-400 font-medium">
-                    <Zap className="w-4 h-4 shrink-0" />
+                <div className="p-3.5 rounded-lg bg-zinc-900/70 border border-zinc-800/80 space-y-2">
+                  <div className="flex items-center gap-2 text-zinc-200 font-medium text-xs">
+                    <Zap className="w-4 h-4 shrink-0 text-zinc-400" />
                     <span>Öne Çıkan Özellikler</span>
                   </div>
-                  <ul className="text-xs text-gray-400 list-disc list-inside space-y-1">
+                  <ul className="text-xs text-zinc-400 list-disc list-inside space-y-1">
                     <li>Tek tıkla panodan otomatik link algılama</li>
                     <li>Orijinal CDN üzerinden hızlı ve doğrudan indirme</li>
-                    <li>İndirme geçmişi yönetimi</li>
+                    <li>Cihaz üzerinde yerel geçmiş yönetimi</li>
                   </ul>
                 </div>
               </div>
 
               <button
                 onClick={() => setIsInfoOpen(false)}
-                className="w-full mt-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-medium text-xs transition-all"
+                className="w-full mt-6 py-2.5 rounded-lg bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-colors cursor-pointer"
               >
                 Anladım
               </button>

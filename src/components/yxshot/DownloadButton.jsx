@@ -119,9 +119,9 @@ export default function DownloadButton({ media }) {
     <div className="flex flex-col gap-3 w-full">
       {/* Download Progress Bar */}
       {isDownloading && (
-        <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+        <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
           <div
-            className="bg-gradient-to-r from-pink-500 to-amber-400 h-full transition-all duration-300 rounded-full"
+            className="bg-white h-full transition-all duration-300 rounded-full"
             style={{ width: `${downloadProgress}%` }}
           />
         </div>
@@ -132,27 +132,26 @@ export default function DownloadButton({ media }) {
         <button
           onClick={handleDownload}
           disabled={isDownloading}
-          className={`flex-1 py-3.5 px-6 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-xl transition-all cursor-pointer ${
+          className={`flex-1 py-3.5 px-6 rounded-xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-sm transition-colors cursor-pointer ${
             isSuccess
-              ? 'bg-emerald-600 text-white shadow-emerald-500/25'
-              : 'bg-gradient-to-r from-pink-600 via-rose-600 to-amber-600 hover:from-pink-500 hover:via-rose-500 hover:to-amber-500 text-white shadow-pink-500/25 active:scale-[0.98]'
+              ? 'bg-emerald-600 text-white'
+              : 'bg-white hover:bg-zinc-200 text-zinc-950 active:scale-[0.99]'
           } disabled:opacity-60 disabled:cursor-not-allowed`}
         >
           {isDownloading ? (
             <>
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <Loader2 className="w-5 h-5 animate-spin text-zinc-950" />
               <span>İndiriliyor (%{downloadProgress})</span>
             </>
           ) : isSuccess ? (
             <>
-              <Check className="w-5 h-5" />
+              <Check className="w-5 h-5 text-white" />
               <span>Cihaza İndirildi!</span>
             </>
           ) : (
             <>
-              <Download className="w-5 h-5" />
+              <Download className="w-5 h-5 text-zinc-950" />
               <span>HD Video İndir (.mp4)</span>
-              <Sparkles className="w-4 h-4 text-amber-300" />
             </>
           )}
         </button>
@@ -160,7 +159,7 @@ export default function DownloadButton({ media }) {
         {/* Share Button */}
         <button
           onClick={handleShare}
-          className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
+          className="p-3.5 rounded-xl bg-zinc-800/80 hover:bg-zinc-700 border border-zinc-700 text-zinc-300 hover:text-white transition-colors cursor-pointer"
           title="Videoyu Paylaş"
         >
           <Share2 className="w-5 h-5" />

@@ -2,13 +2,13 @@
 
 @layer base {
   :root {
-    --bg-onyx: #050505;
-    --border-line: rgba(255, 255, 255, 0.15);
+    --bg-surface: #09090b;
+    --border-line: rgba(255, 255, 255, 0.12);
   }
 
   body {
-    background-color: var(--bg-onyx);
-    color: #E5E5E5;
+    background-color: var(--bg-surface);
+    color: #f4f4f5;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     touch-action: pan-y;
@@ -20,29 +20,11 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: #09090b;
 }
 ::-webkit-scrollbar-thumb {
-  background: #333333;
-  border-radius: 0px;
+  background: #27272a;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #666666;
-}
-
-/* Monochromatic / Brutalist Classes */
-.glass-panel {
-  background: #0A0A0A;
-  border: 1px solid var(--border-line);
-}
-
-.glass-card {
-  background: #111111;
-  border: 1px solid var(--border-line);
-  transition: all 0.2s ease-in-out;
-}
-
-.glass-card:hover {
-  border-color: #666666;
-  background: #161616;
+  background: #3f3f46;
 }

@@ -35,7 +35,7 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-slate-200 overflow-x-hidden selection:bg-white/20 selection:text-white">
+    <div className="relative min-h-screen bg-zinc-950 text-zinc-200 overflow-x-hidden selection:bg-zinc-800 selection:text-white">
       {/* SEO Hidden Text */}
       <h1 className="sr-only">
         Yunus Emre Gedik Portföy - UI/UX Designer & Interactive Developer. Yunus Emre Gedik, Yunovax Portföy, Roblox Developer Yunus Emre Gedik.
