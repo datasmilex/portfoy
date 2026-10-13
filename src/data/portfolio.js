@@ -2,24 +2,6 @@ export const EMAIL = 'iletisim@yunovax.com.tr';
 
 export const PROJECTS = [
   {
-    id: 'yxgames',
-    title: 'YX Games',
-    kind: 'Web oyun platformu',
-    description: 'Yüzlerce HTML5 oyununu tek çatı altında toplayan, tarayıcıdan ücretsiz oynanan oyun platformu.',
-    href: 'https://yxgames.site',
-    linkLabel: 'yxgames.site',
-    external: true,
-  },
-  {
-    id: 'yxshot',
-    title: 'YX Shot',
-    kind: 'Web & mobil araç',
-    description: 'Reels ve kısa videoları filigransız, yüksek çözünürlükte tek dokunuşla indiren araç.',
-    href: '/yxshot',
-    linkLabel: 'Uygulamayı aç',
-    internal: true,
-  },
-  {
     id: 'muzikors',
     title: 'Muzikors',
     kind: 'Müzik platformu',
@@ -34,10 +16,19 @@ export const PROJECTS = [
     kind: 'Roblox · Psikolojik korku',
     description: 'Sisle kaplı bir okyanusun ortasında, nereye uzandığı bilinmeyen bir iskelede geçen atmosferik deneyim.',
     href: 'https://www.roblox.com/games/104035534286177/The-Pier',
-    linkLabel: "Roblox'ta aç",
+    linkLabel: 'Roblox',
     external: true,
     inProgress: true,
     hasLore: true,
+  },
+  {
+    id: 'yxshot',
+    title: 'YX Shot',
+    kind: 'Web & mobil araç',
+    description: 'Reels ve kısa videoları filigransız, yüksek çözünürlükte tek dokunuşla indiren araç.',
+    href: '/yxshot',
+    linkLabel: 'yunovax.com/yxshot',
+    internal: true,
   },
   {
     id: 'ydco',
@@ -46,9 +37,18 @@ export const PROJECTS = [
     description: 'Klasik obby kurallarını bozan, ilerledikçe kendi kod dünyasını sorgulatan zorluk parkuru.',
     whisper: "You shouldn't be here.",
     href: 'https://www.roblox.com/games/97672403225593/Yunovaxs-Difficulty-Chart-Obby',
-    linkLabel: "Roblox'ta aç",
+    linkLabel: 'Roblox',
     external: true,
     inProgress: true,
+  },
+  {
+    id: 'yxgames',
+    title: 'YX Games',
+    kind: 'Web oyun platformu',
+    description: 'Yüzlerce HTML5 oyununu tek çatı altında toplayan, tarayıcıdan ücretsiz oynanan oyun platformu.',
+    href: 'https://yxgames.site',
+    linkLabel: 'yxgames.site',
+    external: true,
   },
 ];
 

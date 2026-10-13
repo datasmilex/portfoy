@@ -48,7 +48,7 @@ export default function ContactSection() {
 
   return (
     <footer id="iletisim" className="scroll-mt-16 border-t border-line">
-      <div className="mx-auto max-w-5xl px-5 pb-10 pt-20 sm:px-8 sm:pt-28">
+      <div className="mx-auto max-w-5xl px-5 pb-6 pt-24 sm:px-8 sm:pt-32">
         <Reveal>
           <h2 className="text-sm text-mute">İletişim</h2>
           <p className="mt-6 max-w-[16ch] font-display text-[2.6rem] leading-[1.02] text-paper sm:text-6xl">
@@ -86,6 +86,13 @@ export default function ContactSection() {
           <span>© {new Date().getFullYear()} Yunus Emre Gedik</span>
           <span className="transition-colors hover:text-mute">buraya bakacağını biliyordum :)</span>
         </div>
+
+        <p
+          aria-hidden="true"
+          className="mt-10 select-none overflow-hidden whitespace-nowrap text-center font-display text-[27vw] leading-[0.8] tracking-[-0.03em] text-paper/[0.06] sm:text-[clamp(8rem,24vw,17.5rem)]"
+        >
+          Yunovax
+        </p>
       </div>
     </footer>
   );

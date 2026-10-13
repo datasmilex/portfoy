@@ -54,6 +54,8 @@ export default function App() {
         <ContactSection />
 
         <LoreModal isOpen={isLoreOpen} onClose={closeLore} />
+
+        <div aria-hidden="true" className="grain pointer-events-none fixed inset-0 z-[60] opacity-[0.055]" />
       </div>
     </MotionConfig>
   );

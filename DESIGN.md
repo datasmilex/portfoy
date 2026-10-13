@@ -35,7 +35,10 @@ Tek renkli ve sıcak. Gradyan, parıltı, neon vurgu yok.
 ---
 
 ## 4. Bileşen kalıpları
-- **Proje dizini:** numara · tür · serif başlık · tek cümle açıklama · bağlantı. Satırın tamamı tıklanabilir (stretched link); ikincil eylemler (`Hikâyeyi oku`) `relative z-10` ile üstte.
+- **Giriş (masthead):** "Yunus Emre *Gedik*" dev serif, kelime kelime maskeden yukarı kayarak açılır. Mobilde üç satır, masaüstünde tek satır. Altında kısa tanıtım, CTA ve "Şu sıralar…" satırı.
+- **Proje dizini:** numara · tür · serif başlık · tek cümle açıklama · alan adı. Satırın tamamı tıklanabilir (stretched link); sağdaki yuvarlak ok rozeti hover/dokunuşta `paper` ile dolar. İkincil eylemler (`Hikâyeyi oku`) `relative z-10` ile üstte.
+- **Kapanış:** Footer'ın en altında `paper` %6 opaklıkta dev "Yunovax" imzası.
+- **Doku:** Tüm sayfanın üstünde %5.5 opaklıkta, sabit (animasyonsuz) gri film greni (`.grain`).
 - **Birincil CTA:** `bg-paper text-ink rounded-full h-12`. İkincil eylemler alt çizgili metin bağlantısı.
 - **Hareket:** `Reveal` bileşeni — 14px yukarı kayarak beliren, tek seferlik. `MotionConfig reducedMotion="user"` ile azaltılmış hareket tercihine uyar.
 

@@ -22,8 +22,8 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-5 sm:px-8">
-        <a href="#top" className="text-[15px] font-medium tracking-tight text-paper">
-          Yunus Emre Gedik
+        <a href="#top" aria-label="Yunovax — başa dön" className="font-display text-[1.4rem] leading-none text-paper">
+          Yunovax
         </a>
 
         <nav className="flex items-center gap-1 text-sm text-mute">
