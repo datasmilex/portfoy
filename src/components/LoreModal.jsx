@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Skull, RotateCcw } from 'lucide-react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { X, RotateCcw } from 'lucide-react';
 
 const LORE_TEXT = `Sisle kaplı sonsuz bir okyanusun ortasında, nereye uzandığı bilinmeyen ahşap bir iskele...
 
@@ -10,109 +10,127 @@ Burada amaç sadece ilerlemek değil; kendi zihninizin karanlığıyla yüzleşm
 
 "Derinlikler sadece suyu temsil etmez. Derinlik, kaçtığın gerçektir."`;
 
-export default function LoreModal({ isOpen, onClose }) {
-  const [displayedText, setDisplayedText] = useState('');
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
-  const typewriterTimerRef = useRef(null);
+const TYPE_SPEED_MS = 24;
 
-  const startTypewriter = () => {
-    if (typewriterTimerRef.current) {
-      clearInterval(typewriterTimerRef.current);
-    }
+function LoreReader({ onClose }) {
+  const reduceMotion = useReducedMotion();
+  const [length, setLength] = useState(reduceMotion ? LORE_TEXT.length : 0);
+  const timerRef = useRef(null);
+  const closeRef = useRef(null);
+  const isComplete = length >= LORE_TEXT.length;
 
-    setDisplayedText('');
-    setIsTypingComplete(false);
+  const stop = () => clearInterval(timerRef.current);
 
-    let index = 0;
-    typewriterTimerRef.current = setInterval(() => {
-      if (index < LORE_TEXT.length) {
-        setDisplayedText(LORE_TEXT.slice(0, index + 1));
-        index++;
-      } else {
-        setIsTypingComplete(true);
-        if (typewriterTimerRef.current) {
-          clearInterval(typewriterTimerRef.current);
-        }
-      }
-    }, 28);
-  };
+  const start = useCallback(() => {
+    stop();
+    setLength(0);
+    timerRef.current = setInterval(() => {
+      setLength((n) => {
+        if (n + 1 >= LORE_TEXT.length) stop();
+        return n + 1;
+      });
+    }, TYPE_SPEED_MS);
+  }, []);
 
   useEffect(() => {
-    if (!isOpen) {
-      if (typewriterTimerRef.current) clearInterval(typewriterTimerRef.current);
-      setDisplayedText('');
-      setIsTypingComplete(false);
-      return;
-    }
+    if (!reduceMotion) start();
+    return stop;
+  }, [reduceMotion, start]);
 
-    startTypewriter();
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeRef.current?.focus();
 
-    return () => {
-      if (typewriterTimerRef.current) clearInterval(typewriterTimerRef.current);
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
     };
-  }, [isOpen]);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [onClose]);
 
-  const handleReplay = () => {
-    startTypewriter();
+  const skip = () => {
+    if (isComplete) return;
+    stop();
+    setLength(LORE_TEXT.length);
   };
 
-  if (!isOpen) return null;
-
   return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/95 overflow-y-auto">
+    <motion.div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lore-title"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+      className="fixed inset-0 z-50 overflow-y-auto bg-ink/[0.97] backdrop-blur-sm"
+    >
+      <div className="mx-auto flex min-h-full max-w-2xl flex-col px-5 pb-10 pt-5 sm:px-8 sm:pt-8">
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-mute">The Pier · Hikâye</p>
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={onClose}
+            aria-label="Kapat"
+            className="-mr-2 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-paper-dim transition-colors hover:bg-ink-raised hover:text-paper"
+          >
+            <X className="h-5 w-5" strokeWidth={1.75} />
+          </button>
+        </div>
+
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-[95vw] sm:w-full max-w-3xl max-h-[85vh] sm:max-h-[90vh] bg-[#050505] rounded-none border border-white/20 overflow-hidden shadow-2xl p-5 sm:p-8 flex flex-col justify-between"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-1 flex-col justify-center py-10"
         >
-          {/* Top Bar Controls */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4 shrink-0">
-            <div className="flex items-center gap-2.5 overflow-hidden">
-              <div className="w-9 h-9 rounded-none bg-[#111] border border-white/20 flex items-center justify-center text-white shrink-0">
-                <Skull className="w-4 h-4" />
-              </div>
-              <div className="truncate">
-                <h3 className="text-base sm:text-xl font-bold text-white tracking-wide truncate">The Pier: Endless Depths</h3>
-                <span className="text-[11px] sm:text-xs font-mono text-gray-400 block truncate">Cinematic Lore</span>
-              </div>
-            </div>
+          <h2 id="lore-title" className="font-display text-[2.6rem] leading-none text-paper sm:text-6xl">
+            Endless <em className="text-paper-dim">Depths</em>
+          </h2>
 
-            <div className="flex items-center gap-2 shrink-0">
-              {/* Close Button */}
-              <button
-                onClick={onClose}
-                className="w-9 h-9 rounded-full bg-slate-900 hover:bg-slate-800 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors cursor-pointer shrink-0"
-                title="Kapat"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Typewriter Text Box */}
-          <div className="flex-1 overflow-y-auto min-h-[180px] bg-[#0A0A0A] rounded-none border border-white/10 p-5 sm:p-7 font-serif text-slate-200 text-sm sm:text-lg leading-relaxed whitespace-pre-line shadow-inner">
-            {displayedText}
-            {!isTypingComplete && <span className="inline-block w-2 h-5 bg-white ml-1 animate-pulse" />}
-          </div>
-
-          {/* Bottom Actions */}
-          <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/10 shrink-0">
-            <span className="text-xs font-mono text-slate-400">
-              Kurgu & Hikaye: Yunus Emre Gedik
+          <div
+            onClick={skip}
+            className="mt-10 min-h-[22rem] whitespace-pre-line font-display text-[1.3rem] leading-[1.55] text-paper-dim sm:text-2xl"
+          >
+            <span className="sr-only">{LORE_TEXT}</span>
+            <span aria-hidden="true">
+              {LORE_TEXT.slice(0, length)}
+              {!isComplete && <span className="ml-0.5 inline-block h-[1.1em] w-px translate-y-[0.15em] bg-paper" />}
             </span>
-
-            <button
-              onClick={handleReplay}
-              className="flex items-center gap-1.5 text-xs font-mono text-gray-400 hover:text-white transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Yeniden Oynat</span>
-            </button>
           </div>
         </motion.div>
+
+        <div className="flex items-center justify-between border-t border-line pt-5 text-sm text-faint">
+          <span>Kurgu: Yunus Emre Gedik</span>
+          {isComplete ? (
+            <button
+              type="button"
+              onClick={start}
+              className="-mr-2 inline-flex h-11 cursor-pointer items-center gap-2 px-2 text-mute transition-colors hover:text-paper"
+            >
+              <RotateCcw className="h-4 w-4" strokeWidth={1.75} />
+              Baştan oku
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={skip}
+              className="-mr-2 inline-flex h-11 cursor-pointer items-center px-2 text-mute transition-colors hover:text-paper"
+            >
+              Tamamını göster
+            </button>
+          )}
+        </div>
       </div>
-    </AnimatePresence>
+    </motion.div>
   );
+}
+
+export default function LoreModal({ isOpen, onClose }) {
+  return <AnimatePresence>{isOpen && <LoreReader onClose={onClose} />}</AnimatePresence>;
 }

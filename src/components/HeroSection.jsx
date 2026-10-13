@@ -1,66 +1,62 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Layers, Gamepad2, ArrowDownRight, Code2 } from 'lucide-react';
-import { scrollToSection } from '../utils/scroll';
+import { ArrowDown } from 'lucide-react';
+
+const rise = (delay) => ({
+  initial: { opacity: 0, y: 18 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] },
+});
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="relative min-h-[75vh] flex items-center justify-center px-4 py-20 overflow-hidden">
-      <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center">
-        
-        {/* Hero Name Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white mb-4"
-        >
-          <span>Yunus Emre Gedik</span>
-          <span className="block text-2xl sm:text-3xl md:text-4xl mt-2 font-medium text-zinc-400">
-            Yunovax
-          </span>
-        </motion.h1>
-
-        {/* Tagline */}
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="text-lg sm:text-xl md:text-2xl font-normal text-zinc-300 mb-6 tracking-wide flex items-center justify-center gap-2.5 flex-wrap"
-        >
-          <Code2 className="w-5 h-5 text-zinc-400 inline" />
-          <span>UI/UX Designer & Interactive Experience Developer</span>
-          <Gamepad2 className="w-5 h-5 text-zinc-400 inline" />
-        </motion.h2>
-
-        {/* Short Bio */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-base sm:text-lg text-zinc-400 max-w-2xl leading-relaxed mb-10 font-normal border border-zinc-800/80 p-6 bg-zinc-900/40 text-balance"
-        >
-          Roblox üzerinde derin hikayeli psikolojik deneyimler kurgularken, web ve mobil platformlarda kullanıcı odaklı dijital ürünler geliştiriyorum.
+    <section
+      id="top"
+      className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl flex-col justify-between px-5 pb-10 pt-[14svh] sm:px-8 sm:pt-[18svh]"
+    >
+      <div>
+        <motion.p {...rise(0)} className="mb-7 text-sm text-mute">
+          Yunovax — Tasarımcı & geliştirici
         </motion.p>
 
-        {/* CTA Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.45 }}
-          className="flex flex-wrap items-center justify-center gap-4"
+        <motion.h1
+          {...rise(0.1)}
+          className="max-w-[13ch] font-display md:max-w-[20ch] text-[clamp(2.9rem,12vw,6.25rem)] leading-[0.98] tracking-[-0.01em] text-paper"
         >
-          <button
-            onClick={() => scrollToSection('projects', 1000)}
-            className="px-8 py-3.5 bg-white text-zinc-950 font-semibold text-sm hover:bg-zinc-200 transition-colors flex items-center gap-2.5 group cursor-pointer shadow-sm"
-          >
-            <Layers className="w-4 h-4 text-zinc-950 group-hover:scale-105 transition-transform" />
-            <span>Projeleri Keşfet</span>
-            <ArrowDownRight className="w-4 h-4 text-zinc-950 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform" />
-          </button>
-        </motion.div>
+          Ürünler tasarlıyorum, <em className="text-paper-dim">dünyalar</em> kuruyorum.
+        </motion.h1>
 
+        <motion.p
+          {...rise(0.22)}
+          className="mt-8 max-w-[36ch] text-[17px] leading-relaxed text-mute sm:text-lg"
+        >
+          Web ve mobilde kullanıcı odaklı dijital ürünler geliştiriyor, Roblox üzerinde hikâyesi
+          olan psikolojik deneyimler kurguluyorum.
+        </motion.p>
+
+        <motion.div {...rise(0.34)} className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <a
+            href="#isler"
+            className="group inline-flex h-12 items-center gap-2 rounded-full bg-paper px-6 text-[15px] font-medium text-ink transition-colors hover:bg-white"
+          >
+            İşlere göz at
+            <ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" strokeWidth={1.75} />
+          </a>
+          <a
+            href="#iletisim"
+            className="text-[15px] text-paper-dim underline decoration-line-strong underline-offset-[6px] transition-colors hover:text-paper hover:decoration-paper/60"
+          >
+            Birlikte çalışalım
+          </a>
+        </motion.div>
       </div>
+
+      <motion.p {...rise(0.5)} className="mt-16 flex items-center gap-3 text-sm text-mute">
+        <span className="h-px w-8 bg-line-strong" aria-hidden="true" />
+        <span>
+          Şu sıralar <span className="text-paper-dim">The Pier</span> üzerinde çalışıyorum.
+        </span>
+      </motion.p>
     </section>
   );
 }

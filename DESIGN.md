@@ -1,59 +1,48 @@
 # Design System (DESIGN.md)
 
-This document formalizes the design tokens, rules, and visual vocabulary for Yunus Emre Gedik's personal portfolio and tools ecosystem (Yunovax & YX Shot), following the standards defined by [impeccable.style](https://impeccable.style).
+Yunus Emre Gedik (Yunovax) kişisel portföyünün tasarım dili. YX Shot (`/yxshot`) kendi zinc tabanlı arayüzünü korur; bu belge portföy sayfası içindir.
 
 ---
 
-## 1. Aesthetic Principles
-- **Intentional & Confident:** No AI slop, no unmotivated multi-stop rainbow gradients, no blurry ambient orbs, and no decorative dot-matrix grids.
-- **Dark Tinted Neutrals:** Avoid pure `#000` void black. Use rich zinc dark neutrals (`zinc-950` `#09090b` base, `zinc-900` elevated surfaces).
-- **Typographic Hierarchy:** Strong, crisp contrast between display headings, section subtitles, and body text. No tracked uppercase kicker pills borrowing unearned authority.
-- **Form Follows Function:** Icons sit in flow beside text, never inside redundant stacked container tiles. Primary CTAs have unmistakable visual weight and clear contrast.
+## 1. Yön: sessiz lüks
+- **Tipografi taşır, dekor değil.** Kart, rozet, ikon karosu yok. Hiyerarşiyi serif başlıklar, ince çizgiler ve boşluk kurar.
+- **Mobil önce.** Ziyaretçilerin çoğu telefondan gelir; her satır başparmakla rahat dokunulabilir (min. 44px), yatay kaydırma yok.
+- **Az ama net.** Her bölümde tek bir fikir: kim olduğum, ne yaptığım, nasıl ulaşılacağı.
+- **Kişilik detaylarda.** YDCO'nun fısıltısı (yalnızca hover destekleyen cihazlarda), The Pier okuma görünümü, footer'daki not.
 
 ---
 
-## 2. Color Palette & Tokens
+## 2. Renk token'ları (`src/index.css` → `@theme`)
+| Token | Değer | Kullanım |
+| --- | --- | --- |
+| `ink` | `#0e0d0c` | Zemin (sıcak kömür) |
+| `ink-raised` | `#171513` | Hover yüzeyi |
+| `paper` | `#ece7df` | Başlıklar, birincil metin, birincil buton |
+| `paper-dim` | `#c9c3b9` | Vurgulu ikincil metin, italik vurgular |
+| `mute` | `#8f897f` | Açıklamalar, etiketler |
+| `faint` | `#625d56` | Numaralar, meta |
+| `line` / `line-strong` | paper @ %11 / %22 | Ayraçlar, çerçeveler |
 
-### Base & Surfaces
-- **App Background:** `var(--bg-surface)` / `zinc-950` (`#09090b`)
-- **Card Background:** `zinc-900/40` (`#18181b` with alpha)
-- **Header / Nav Background:** `zinc-950/85` with `backdrop-blur-md`
-- **Elevated Surfaces:** `zinc-900` (`#18181b`)
-- **Interactive Hover Surfaces:** `zinc-800/80` (`#27272a`)
-
-### Borders & Dividers
-- **Default Borders:** `border-zinc-800/80` (`rgba(39, 39, 42, 0.8)`)
-- **Hover / Active Borders:** `border-zinc-600` (`#52525b`)
-- **Focus Rings:** `focus-within:border-zinc-500`
-
-### Text & Contrast
-- **Primary Headings & Titles:** `text-white` (`#ffffff`)
-- **High Emphasis Body:** `text-zinc-200` (`#e4e4e7`)
-- **Secondary / Descriptive Text:** `text-zinc-400` (`#a1a1aa`)
-- **Muted Labels & Metadata:** `text-zinc-500` (`#71717a`)
-- **Minimum Readable Font Size:** `12px` (`text-xs`). Zero text under 11px.
-
-### Action Colors
-- **Primary CTA:** Solid White (`#ffffff`) with `text-zinc-950` (`#09090b`), hover `bg-zinc-200`.
-- **Secondary Actions:** `bg-zinc-800` border `border-zinc-700`, text `text-zinc-200`.
-- **Status Badges:** `bg-zinc-800` border `border-zinc-700` text `text-zinc-300`, success `text-emerald-400`.
+Tek renkli ve sıcak. Gradyan, parıltı, neon vurgu yok.
 
 ---
 
-## 3. Typography Scale
-- **Display Headings (H1):** `text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight`
-- **Section Titles (H2):** `text-3xl md:text-5xl font-bold tracking-tight`
-- **Card / Item Titles (H3):** `text-xl font-bold tracking-wide`
-- **Sub-headings / Body (H4, p):** `text-base` / `text-sm leading-relaxed`
-- **Mono / Metadata / Labels:** `text-xs font-mono`
+## 3. Tipografi
+- **Display:** Instrument Serif (`font-display`) — h1 `clamp(2.9rem, 12vw, 6.25rem)`, bölüm başlıkları `2.5rem → 6xl`, proje adları `2.6rem → 5xl`. Vurgu için italik + `paper-dim`.
+- **Metin:** Inter (`font-sans`) — gövde 15–17px, etiketler 14px (`text-sm`). 12px altı metin yok.
+- Etiketler büyük harf/izli değil; düz, küçük ve `mute` renginde.
 
 ---
 
-## 4. Anti-Patterns Strictly Prohibited
-- ❌ No multi-stop gradient text (`bg-clip-text text-transparent bg-gradient-to-r...`).
-- ❌ No AI rainbow gradient borders or buttons (purple via pink to amber).
-- ❌ No decorative grid/radial-dot patterns covering cards.
-- ❌ No decorative kicker/eyebrow pills stacked directly above headlines.
-- ❌ No blurry floating glow orbs (`blur-xl rounded-full scale-150`).
-- ❌ No nested icon tiles inside parent tiles.
-- ❌ No micro text under 11px.
+## 4. Bileşen kalıpları
+- **Proje dizini:** numara · tür · serif başlık · tek cümle açıklama · bağlantı. Satırın tamamı tıklanabilir (stretched link); ikincil eylemler (`Hikâyeyi oku`) `relative z-10` ile üstte.
+- **Birincil CTA:** `bg-paper text-ink rounded-full h-12`. İkincil eylemler alt çizgili metin bağlantısı.
+- **Hareket:** `Reveal` bileşeni — 14px yukarı kayarak beliren, tek seferlik. `MotionConfig reducedMotion="user"` ile azaltılmış hareket tercihine uyar.
+
+---
+
+## 5. Yasaklar
+- ❌ Gradyan metin, gradyan buton/çerçeve, bulanık ışık küreleri.
+- ❌ Başlık üstü rozet/pill etiketleri, iç içe ikon karoları.
+- ❌ Kart ızgaraları içinde kart; her şeyin bir kutuda olması.
+- ❌ Konfeti, sürekli dönen/titreyen ikonlar gibi dikkat dağıtan hareket.

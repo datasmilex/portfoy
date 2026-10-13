@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import ProjectsSection from './components/ProjectsSection';
-import TechArsenal from './components/TechArsenal';
-import CommunitySection from './components/CommunitySection';
+import AboutSection from './components/AboutSection';
 import LoreModal from './components/LoreModal';
 import ContactSection from './components/ContactSection';
 import YxShotApp from './components/yxshot/YxShotApp';
@@ -13,6 +13,7 @@ export default function App() {
     typeof window !== 'undefined' ? window.location.pathname : '/'
   );
   const [isLoreOpen, setIsLoreOpen] = useState(false);
+  const closeLore = useCallback(() => setIsLoreOpen(false), []);
 
   const navigate = (path) => {
     window.history.pushState({}, '', path);
@@ -35,17 +36,11 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen bg-zinc-950 text-zinc-200 overflow-x-hidden selection:bg-zinc-800 selection:text-white">
-      {/* SEO Hidden Text */}
-      <h1 className="sr-only">
-        Yunus Emre Gedik Portföy - UI/UX Designer & Interactive Developer. Yunus Emre Gedik, Yunovax Portföy, Roblox Developer Yunus Emre Gedik.
-      </h1>
-
-      {/* Main Content Layout */}
-      <div className="relative z-10 flex flex-col min-h-screen">
+    <MotionConfig reducedMotion="user">
+      <div className="min-h-screen overflow-x-clip bg-ink font-sans text-paper selection:bg-paper selection:text-ink">
         <Navbar />
 
-        <main className="flex-1">
+        <main>
           <HeroSection />
 
           <ProjectsSection
@@ -53,16 +48,13 @@ export default function App() {
             onNavigateToYxShot={() => navigate('/yxshot')}
           />
 
-          <TechArsenal />
-
-          <CommunitySection />
-
-          <ContactSection />
+          <AboutSection />
         </main>
 
-        {/* Cinematic Lore Modal for The Pier */}
-        <LoreModal isOpen={isLoreOpen} onClose={() => setIsLoreOpen(false)} />
+        <ContactSection />
+
+        <LoreModal isOpen={isLoreOpen} onClose={closeLore} />
       </div>
-    </div>
+    </MotionConfig>
   );
 }

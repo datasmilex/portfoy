@@ -1,17 +1,45 @@
 @import "tailwindcss";
 
+/* Portfolio tokens: warm charcoal ground, ivory type, one serif voice */
+@theme {
+  --color-ink: #0e0d0c;
+  --color-ink-raised: #171513;
+  --color-paper: #ece7df;
+  --color-paper-dim: #c9c3b9;
+  --color-mute: #8f897f;
+  --color-faint: #625d56;
+  --color-line: rgb(236 231 223 / 0.11);
+  --color-line-strong: rgb(236 231 223 / 0.22);
+
+  --font-display: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
 @layer base {
   :root {
     --bg-surface: #09090b;
     --border-line: rgba(255, 255, 255, 0.12);
   }
 
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   body {
     background-color: var(--bg-surface);
     color: #f4f4f5;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-sans);
     overflow-x: hidden;
     touch-action: pan-y;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
