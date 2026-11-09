@@ -32,13 +32,16 @@ function ArrowBadge({ internal, className = '' }) {
   );
 }
 
+// Small numbers read as weak social proof, so only show them past these thresholds.
+const MIN = { visits: 100, favorites: 10, playing: 3 };
+
 function projectNumbers(project, stats, t, lang) {
   const out = [...(project.stats || []).map((s) => ({ value: s.value, label: t(s.label) }))];
   const r = project.robloxPlaceId && stats.roblox[project.robloxPlaceId];
   if (r) {
-    if (r.visits) out.push({ value: formatCount(r.visits, lang), label: t(TXT.visits) });
-    if (r.favorites) out.push({ value: formatCount(r.favorites, lang), label: t(TXT.favorites) });
-    if (r.playing) out.push({ value: formatCount(r.playing, lang), label: t(TXT.playing) });
+    if (r.visits >= MIN.visits) out.push({ value: formatCount(r.visits, lang), label: t(TXT.visits) });
+    if (r.favorites >= MIN.favorites) out.push({ value: formatCount(r.favorites, lang), label: t(TXT.favorites) });
+    if (r.playing >= MIN.playing) out.push({ value: formatCount(r.playing, lang), label: t(TXT.playing) });
   }
   const p = project.playStoreId && stats.play[project.playStoreId];
   if (p) {
@@ -51,11 +54,9 @@ function projectNumbers(project, stats, t, lang) {
 function ProjectRow({ project, index, stats, onOpenLore, onNavigateToYxShot }) {
   const { t, lang } = useLang();
   const number = String(index + 1).padStart(2, '0');
+  const playIcon = !project.image && project.playStoreId ? stats.play[project.playStoreId]?.image : null;
   const image =
-    project.image ||
-    (project.robloxPlaceId && stats.roblox[project.robloxPlaceId]?.image) ||
-    (project.playStoreId && stats.play[project.playStoreId]?.image) ||
-    null;
+    project.image || (project.robloxPlaceId && stats.roblox[project.robloxPlaceId]?.image) || playIcon || null;
   const numbers = projectNumbers(project, stats, t, lang);
 
   const linkProps = project.external
@@ -112,7 +113,9 @@ function ProjectRow({ project, index, stats, onOpenLore, onNavigateToYxShot }) {
               alt={`${project.title} — ${t(project.kind)}`}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover object-top opacity-90 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] group-hover:opacity-100"
+              className={`${
+                playIcon ? 'mx-auto h-full w-auto rounded-[22%] p-10 object-contain' : 'h-full w-full object-cover object-top'
+              } opacity-90 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] group-hover:opacity-100`}
             />
           </div>
         )}
