@@ -6,6 +6,9 @@ import ProjectsSection from './components/ProjectsSection';
 import AboutSection from './components/AboutSection';
 import LoreModal from './components/LoreModal';
 import ContactSection from './components/ContactSection';
+import MusicSection from './components/MusicSection';
+import GallerySection from './components/GallerySection';
+import { Analytics } from '@vercel/analytics/react';
 import YxShotApp from './components/yxshot/YxShotApp';
 
 export default function App() {
@@ -49,11 +52,17 @@ export default function App() {
           />
 
           <AboutSection />
+
+          <MusicSection />
+
+          <GallerySection />
         </main>
 
         <ContactSection />
 
         <LoreModal isOpen={isLoreOpen} onClose={closeLore} />
+
+        <Analytics />
 
         <div aria-hidden="true" className="grain pointer-events-none fixed inset-0 z-[60] opacity-[0.055]" />
       </div>

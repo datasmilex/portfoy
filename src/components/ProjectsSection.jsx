@@ -2,6 +2,20 @@ import React from 'react';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import Reveal from './Reveal';
 import { PROJECTS } from '../data/portfolio';
+import { useLang } from '../i18n';
+import useStats, { formatCount } from '../hooks/useStats';
+
+const TXT = {
+  heading: { tr: 'Seçili', en: 'Selected' },
+  headingEm: { tr: 'işler', en: 'work' },
+  inProgress: { tr: 'Yapım aşamasında', en: 'In progress' },
+  lore: { tr: 'Hikâyeyi oku', en: 'Read the story' },
+  visits: { tr: 'ziyaret', en: 'visits' },
+  playing: { tr: 'şu an oynuyor', en: 'playing now' },
+  favorites: { tr: 'favori', en: 'favorites' },
+  installs: { tr: 'indirme', en: 'downloads' },
+  rating: { tr: 'puan', en: 'rating' },
+};
 
 function ArrowBadge({ internal, className = '' }) {
   const Icon = internal ? ArrowRight : ArrowUpRight;
@@ -18,8 +32,31 @@ function ArrowBadge({ internal, className = '' }) {
   );
 }
 
-function ProjectRow({ project, index, onOpenLore, onNavigateToYxShot }) {
+function projectNumbers(project, stats, t, lang) {
+  const out = [...(project.stats || []).map((s) => ({ value: s.value, label: t(s.label) }))];
+  const r = project.robloxPlaceId && stats.roblox[project.robloxPlaceId];
+  if (r) {
+    if (r.visits) out.push({ value: formatCount(r.visits, lang), label: t(TXT.visits) });
+    if (r.favorites) out.push({ value: formatCount(r.favorites, lang), label: t(TXT.favorites) });
+    if (r.playing) out.push({ value: formatCount(r.playing, lang), label: t(TXT.playing) });
+  }
+  const p = project.playStoreId && stats.play[project.playStoreId];
+  if (p) {
+    if (p.installs) out.push({ value: p.installs, label: t(TXT.installs) });
+    if (p.rating) out.push({ value: `${p.rating}★`, label: t(TXT.rating) });
+  }
+  return out;
+}
+
+function ProjectRow({ project, index, stats, onOpenLore, onNavigateToYxShot }) {
+  const { t, lang } = useLang();
   const number = String(index + 1).padStart(2, '0');
+  const image =
+    project.image ||
+    (project.robloxPlaceId && stats.roblox[project.robloxPlaceId]?.image) ||
+    (project.playStoreId && stats.play[project.playStoreId]?.image) ||
+    null;
+  const numbers = projectNumbers(project, stats, t, lang);
 
   const linkProps = project.external
     ? { target: '_blank', rel: 'noopener noreferrer' }
@@ -44,7 +81,7 @@ function ProjectRow({ project, index, onOpenLore, onNavigateToYxShot }) {
         <div>
           <p className="text-sm text-mute">
             <span className="tabular-nums text-faint md:hidden">{number}&ensp;</span>
-            {project.kind}
+            {t(project.kind)}
           </p>
           <h3 className="mt-3 font-display text-[2.85rem] leading-[0.95] tracking-[-0.01em] text-paper transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2 sm:text-[3.5rem]">
             <a
@@ -68,9 +105,33 @@ function ProjectRow({ project, index, onOpenLore, onNavigateToYxShot }) {
       </div>
 
       <div className="md:pt-7">
+        {image && (
+          <div className="mt-6 aspect-[16/10] overflow-hidden rounded-xl border border-line bg-ink-raised md:mt-0 md:mb-6">
+            <img
+              src={image}
+              alt={`${project.title} — ${t(project.kind)}`}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover object-top opacity-90 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] group-hover:opacity-100"
+            />
+          </div>
+        )}
+
         <p className="mt-5 max-w-[44ch] text-[15px] leading-relaxed text-mute md:mt-0 md:text-base">
-          {project.description}
+          {t(project.description)}
         </p>
+
+        {numbers.length > 0 && (
+          <dl className="mt-5 flex flex-wrap gap-x-7 gap-y-3">
+            {numbers.map((n) => (
+              <div key={n.label}>
+                <dt className="sr-only">{n.label}</dt>
+                <dd className="font-display text-2xl leading-none text-paper tabular-nums">{n.value}</dd>
+                <dd aria-hidden="true" className="mt-1 text-xs text-faint">{n.label}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
 
         <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-faint">
           <span>{project.linkLabel}</span>
@@ -78,7 +139,7 @@ function ProjectRow({ project, index, onOpenLore, onNavigateToYxShot }) {
           {project.inProgress && (
             <span className="inline-flex items-center gap-2">
               <span className="h-1 w-1 rounded-full bg-mute" aria-hidden="true" />
-              Yapım aşamasında
+              {t(TXT.inProgress)}
             </span>
           )}
 
@@ -88,7 +149,7 @@ function ProjectRow({ project, index, onOpenLore, onNavigateToYxShot }) {
               onClick={onOpenLore}
               className="relative z-10 -my-2 cursor-pointer py-2 text-paper-dim underline decoration-line-strong underline-offset-[5px] transition-colors hover:text-paper hover:decoration-paper/60"
             >
-              Hikâyeyi oku
+              {t(TXT.lore)}
             </button>
           )}
         </div>
@@ -100,11 +161,14 @@ function ProjectRow({ project, index, onOpenLore, onNavigateToYxShot }) {
 }
 
 export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
+  const { t } = useLang();
+  const stats = useStats();
+
   return (
     <section id="isler" className="mx-auto max-w-5xl scroll-mt-16 px-5 py-24 sm:px-8 sm:py-32">
       <Reveal className="mb-10 flex items-end justify-between gap-6 sm:mb-14">
         <h2 className="font-display text-[2.75rem] leading-none tracking-[-0.01em] text-paper sm:text-6xl">
-          Seçili <em className="text-paper-dim">işler</em>
+          {t(TXT.heading)} <em className="text-paper-dim">{t(TXT.headingEm)}</em>
         </h2>
         <span className="pb-1 text-sm tabular-nums text-mute">
           {String(PROJECTS.length).padStart(2, '0')}
@@ -117,6 +181,7 @@ export default function ProjectsSection({ onOpenLore, onNavigateToYxShot }) {
             key={project.id}
             project={project}
             index={index}
+            stats={stats}
             onOpenLore={onOpenLore}
             onNavigateToYxShot={onNavigateToYxShot}
           />

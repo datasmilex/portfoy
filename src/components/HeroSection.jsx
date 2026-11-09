@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
+import { useLang } from '../i18n';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -17,6 +18,7 @@ const rise = (delay) => ({
 });
 
 export default function HeroSection() {
+  const { t } = useLang();
   return (
     <section
       id="top"
@@ -24,7 +26,7 @@ export default function HeroSection() {
     >
       <div>
         <motion.p {...rise(0)} className="text-sm text-mute">
-          UI/UX tasarımcı · Geliştirici
+          {t({ tr: 'UI/UX tasarımcı · Geliştirici', en: 'UI/UX designer · Developer' })}
         </motion.p>
 
         <h1 className="mt-5 font-display text-[clamp(5rem,29vw,9rem)] leading-[0.86] tracking-[-0.025em] text-paper md:whitespace-nowrap md:text-[clamp(6rem,10.4vw,9.5rem)]">
@@ -48,8 +50,10 @@ export default function HeroSection() {
           {...rise(0.55)}
           className="mt-8 max-w-[36ch] text-[17px] leading-relaxed text-mute sm:text-lg"
         >
-          Web ve mobilde kullanıcı odaklı dijital ürünler geliştiriyor, Roblox üzerinde hikâyesi
-          olan psikolojik deneyimler kurguluyorum.
+          {t({
+            tr: 'Web ve mobilde kullanıcı odaklı dijital ürünler geliştiriyor, Roblox üzerinde hikâyesi olan psikolojik deneyimler kurguluyorum.',
+            en: 'I build user-centred digital products for web and mobile, and craft story-driven psychological experiences on Roblox.',
+          })}
         </motion.p>
 
         <motion.div {...rise(0.65)} className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
@@ -57,14 +61,14 @@ export default function HeroSection() {
             href="#isler"
             className="group inline-flex h-12 items-center gap-2.5 rounded-full bg-paper pl-6 pr-5 text-[15px] font-medium text-ink transition-colors duration-300 hover:bg-white"
           >
-            İşlere göz at
+            {t({ tr: 'İşlere göz at', en: 'See the work' })}
             <ArrowDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" strokeWidth={1.75} />
           </a>
           <a
             href="#iletisim"
             className="text-[15px] text-paper-dim underline decoration-line-strong underline-offset-[6px] transition-colors duration-300 hover:text-paper hover:decoration-paper/60"
           >
-            Birlikte çalışalım
+            {t({ tr: 'Birlikte çalışalım', en: 'Work with me' })}
           </a>
         </motion.div>
       </div>
@@ -76,15 +80,15 @@ export default function HeroSection() {
         className="mt-12 border-t border-line pt-5"
       >
         <p className="text-sm leading-relaxed text-mute">
-          Şu sıralar{' '}
+          {t({ tr: 'Şu sıralar', en: 'Currently working on' })}{' '}
           <a href="#muzikors" className="text-paper-dim transition-colors hover:text-paper">
             Muzikors
           </a>{' '}
-          ve{' '}
+          {t({ tr: 've', en: 'and' })}{' '}
           <a href="#thepier" className="text-paper-dim transition-colors hover:text-paper">
             The Pier
           </a>{' '}
-          üzerinde çalışıyorum.
+          {t({ tr: 'üzerinde çalışıyorum.', en: '' })}
         </p>
       </motion.div>
     </section>

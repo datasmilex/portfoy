@@ -1,18 +1,35 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { X, RotateCcw } from 'lucide-react';
+import { useLang } from '../i18n';
 
-const LORE_TEXT = `Sisle kaplı sonsuz bir okyanusun ortasında, nereye uzandığı bilinmeyen ahşap bir iskele...
+const LORE = {
+  tr: `Sisle kaplı sonsuz bir okyanusun ortasında, nereye uzandığı bilinmeyen ahşap bir iskele...
 
 "The Pier: Endless Depths", oyuncuyu yalnızlığın, fısıltıların ve zamanın durduğu bir hafıza denizinin içine fırlatır. Her adımda sis biraz daha yoğunlaşır, deniz dalgaları geçmişin yankılarını kıyıya vurur.
 
 Burada amaç sadece ilerlemek değil; kendi zihninizin karanlığıyla yüzleşmektir. Fenerin cılız ışığı sönmeye başladığında, dalgaların altından seslenen şey sizden ne istiyor?
 
-"Derinlikler sadece suyu temsil etmez. Derinlik, kaçtığın gerçektir."`;
+"Derinlikler sadece suyu temsil etmez. Derinlik, kaçtığın gerçektir."`,
+  en: `In the middle of an endless, fog-covered ocean, a wooden pier stretching who knows where...
+
+"The Pier: Endless Depths" throws the player into a sea of memory where loneliness, whispers and stillness reign. With every step the fog grows thicker, and the waves wash the echoes of the past ashore.
+
+The goal here is not just to move forward; it is to face the darkness of your own mind. When the lantern's faint light begins to fade, what does the thing calling from beneath the waves want from you?
+
+"The depths are not just the water. The depth is the truth you are running from."`,
+};
+
+const UI = {
+  tr: { label: 'The Pier · Hikâye', close: 'Kapat', credit: 'Kurgu: Yunus Emre Gedik', replay: 'Baştan oku', skip: 'Tamamını göster' },
+  en: { label: 'The Pier · Story', close: 'Close', credit: 'Story: Yunus Emre Gedik', replay: 'Read again', skip: 'Show all' },
+};
 
 const TYPE_SPEED_MS = 24;
 
-function LoreReader({ onClose }) {
+function LoreReader({ onClose, lang }) {
+  const LORE_TEXT = LORE[lang];
+  const ui = UI[lang];
   const reduceMotion = useReducedMotion();
   const [length, setLength] = useState(reduceMotion ? LORE_TEXT.length : 0);
   const timerRef = useRef(null);
@@ -30,7 +47,7 @@ function LoreReader({ onClose }) {
         return n + 1;
       });
     }, TYPE_SPEED_MS);
-  }, []);
+  }, [LORE_TEXT.length]);
 
   useEffect(() => {
     if (!reduceMotion) start();
@@ -71,12 +88,12 @@ function LoreReader({ onClose }) {
     >
       <div className="mx-auto flex min-h-full max-w-2xl flex-col px-5 pb-10 pt-5 sm:px-8 sm:pt-8">
         <div className="flex items-center justify-between">
-          <p className="text-sm text-mute">The Pier · Hikâye</p>
+          <p className="text-sm text-mute">{ui.label}</p>
           <button
             ref={closeRef}
             type="button"
             onClick={onClose}
-            aria-label="Kapat"
+            aria-label={ui.close}
             className="-mr-2 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-paper-dim transition-colors hover:bg-ink-raised hover:text-paper"
           >
             <X className="h-5 w-5" strokeWidth={1.75} />
@@ -106,7 +123,7 @@ function LoreReader({ onClose }) {
         </motion.div>
 
         <div className="flex items-center justify-between border-t border-line pt-5 text-sm text-faint">
-          <span>Kurgu: Yunus Emre Gedik</span>
+          <span>{ui.credit}</span>
           {isComplete ? (
             <button
               type="button"
@@ -114,7 +131,7 @@ function LoreReader({ onClose }) {
               className="-mr-2 inline-flex h-11 cursor-pointer items-center gap-2 px-2 text-mute transition-colors hover:text-paper"
             >
               <RotateCcw className="h-4 w-4" strokeWidth={1.75} />
-              Baştan oku
+              {ui.replay}
             </button>
           ) : (
             <button
@@ -122,7 +139,7 @@ function LoreReader({ onClose }) {
               onClick={skip}
               className="-mr-2 inline-flex h-11 cursor-pointer items-center px-2 text-mute transition-colors hover:text-paper"
             >
-              Tamamını göster
+              {ui.skip}
             </button>
           )}
         </div>
@@ -132,5 +149,8 @@ function LoreReader({ onClose }) {
 }
 
 export default function LoreModal({ isOpen, onClose }) {
-  return <AnimatePresence>{isOpen && <LoreReader onClose={onClose} />}</AnimatePresence>;
+  const { lang } = useLang();
+  return (
+    <AnimatePresence>{isOpen && <LoreReader key={lang} lang={lang === 'en' ? 'en' : 'tr'} onClose={onClose} />}</AnimatePresence>
+  );
 }

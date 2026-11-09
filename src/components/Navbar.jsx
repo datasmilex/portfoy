@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useLang } from '../i18n';
 
 const LINKS = [
-  { href: '#isler', label: 'İşler' },
-  { href: '#hakkimda', label: 'Hakkımda' },
+  { href: '#isler', label: { tr: 'İşler', en: 'Work' } },
+  { href: '#hakkimda', label: { tr: 'Hakkımda', en: 'About' } },
+  { href: '#muzik', label: { tr: 'Müzik', en: 'Music' } },
 ];
 
 export default function Navbar() {
+  const { lang, setLang, t } = useLang();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -22,7 +25,7 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-5 sm:px-8">
-        <a href="#top" aria-label="Yunovax — başa dön" className="font-display text-[1.4rem] leading-none text-paper">
+        <a href="#top" aria-label={t({ tr: 'Yunovax — başa dön', en: 'Yunovax — back to top' })} className="font-display text-[1.4rem] leading-none text-paper">
           Yunovax
         </a>
 
@@ -33,14 +36,22 @@ export default function Navbar() {
               href={link.href}
               className="hidden rounded-full px-3 py-2 transition-colors hover:text-paper sm:inline-block"
             >
-              {link.label}
+              {t(link.label)}
             </a>
           ))}
+          <button
+            type="button"
+            onClick={() => setLang(lang === 'tr' ? 'en' : 'tr')}
+            aria-label={lang === 'tr' ? 'Switch to English' : 'Türkçeye geç'}
+            className="cursor-pointer rounded-full px-3 py-2 tabular-nums transition-colors hover:text-paper"
+          >
+            {lang === 'tr' ? 'EN' : 'TR'}
+          </button>
           <a
             href="#iletisim"
             className="rounded-full border border-line-strong px-4 py-2 text-paper transition-colors hover:border-paper/60"
           >
-            İletişim
+            {t({ tr: 'İletişim', en: 'Contact' })}
           </a>
         </nav>
       </div>
