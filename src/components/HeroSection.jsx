@@ -22,17 +22,17 @@ export default function HeroSection() {
   return (
     <section
       id="top"
-      className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-5xl flex-col justify-between px-5 pb-7 pt-[6svh] sm:px-8 sm:pt-[14svh]"
+      className="mx-auto max-w-5xl px-5 pb-8 pt-12 sm:px-8 sm:pt-24"
     >
       <div>
         <motion.p {...rise(0)} className="text-sm text-mute">
           {t({ tr: 'UI/UX tasarımcı · Geliştirici', en: 'UI/UX designer · Developer' })}
         </motion.p>
 
-        <h1 className="mt-5 font-display text-[clamp(5rem,29vw,9rem)] leading-[0.86] tracking-[-0.025em] text-paper md:whitespace-nowrap md:text-[clamp(6rem,10.4vw,9.5rem)]">
+        <h1 className="mt-5 font-display text-[clamp(3rem,15vw,7rem)] leading-[0.86] tracking-[-0.025em] text-paper md:whitespace-nowrap md:text-[clamp(5rem,9vw,8rem)]">
           {NAME.map(({ word, italic }, i) => (
             <React.Fragment key={word}>
-              <span className={`block overflow-hidden pb-[0.04em] md:inline-block ${italic ? 'pr-[0.08em]' : ''}`}>
+              <span className={`inline-block overflow-hidden pb-[0.04em] ${italic ? 'pr-[0.08em]' : ''}`}>
                 <motion.span
                   className={`block ${italic ? 'italic text-paper-dim' : ''}`}
                   initial={{ y: '105%' }}
@@ -77,7 +77,7 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2, delay: 0.85 }}
-        className="mt-12 border-t border-line pt-5"
+        className="mt-12 hidden"
       >
         <p className="text-sm leading-relaxed text-mute">
           {t({ tr: 'Şu sıralar', en: 'Currently working on' })}{' '}

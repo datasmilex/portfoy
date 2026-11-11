@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLang } from '../i18n';
+import Logo from './Logo';
 
 const LINKS = [
   { href: '#isler', label: { tr: 'İşler', en: 'Work' } },
   { href: '#hakkimda', label: { tr: 'Hakkımda', en: 'About' } },
-  { href: '#muzik', label: { tr: 'Müzik', en: 'Music' } },
 ];
 
 export default function Navbar() {
@@ -25,7 +25,8 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-5 sm:px-8">
-        <a href="#top" aria-label={t({ tr: 'Yunovax — başa dön', en: 'Yunovax — back to top' })} className="font-display text-[1.4rem] leading-none text-paper">
+        <a href="#top" aria-label={t({ tr: 'Yunovax — başa dön', en: 'Yunovax — back to top' })} className="flex items-center gap-2.5 font-display text-[1.4rem] leading-none text-paper">
+          <Logo className="h-6 w-6" />
           Yunovax
         </a>
 
