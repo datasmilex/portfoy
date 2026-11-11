@@ -47,7 +47,7 @@ export default function App() {
 
           <ProjectsSection
             onOpenLore={() => setIsLoreOpen(true)}
-            onNavigateToYxShot={() => navigate('/yxshot')}
+            onNavigateToYxShot={() => window.location.assign('/yxshot')}
           />
 
           <AboutSection />

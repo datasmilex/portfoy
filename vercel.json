@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/yxshot",
+      "destination": "https://yx-shot.vercel.app/yxshot"
+    },
+    {
+      "source": "/yxshot/:path*",
+      "destination": "https://yx-shot.vercel.app/yxshot/:path*"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "/api/$1"
     },
