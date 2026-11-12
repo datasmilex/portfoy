@@ -4,7 +4,7 @@ import Logo from './Logo';
 
 const LINKS = [
   { href: '#isler', label: { tr: 'İşler', en: 'Work' } },
-  { href: '#hakkimda', label: { tr: 'Hakkımda', en: 'About' } },
+  { href: '#baglantilar', label: { tr: 'Bağlantılar', en: 'Links' } },
 ];
 
 export default function Navbar() {

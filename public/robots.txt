@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://yunovax.com/sitemap.xml
+Sitemap: https://www.yunovax.com/sitemap.xml

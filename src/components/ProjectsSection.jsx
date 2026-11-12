@@ -8,6 +8,7 @@ import useStats, { formatCount } from '../hooks/useStats';
 const TXT = {
   heading: { tr: 'İşler', en: 'Work' },
   inProgress: { tr: 'Yapımda', en: 'In progress' },
+  testing: { tr: 'Test sürümü', en: 'Testing' },
   lore: { tr: 'Hikâye', en: 'Story' },
   visits: { tr: 'ziyaret', en: 'visits' },
   installs: { tr: 'indirme', en: 'downloads' },
@@ -41,7 +42,7 @@ function ProjectCard({ project, stats, onOpenLore, onNavigateToYxShot }) {
 
   return (
     <article id={project.id} className="group relative scroll-mt-20">
-      <div className="aspect-[16/10] overflow-hidden rounded-xl border border-line bg-ink-raised">
+      <div className="aspect-[1024/500] overflow-hidden rounded-xl border border-line bg-ink-raised">
         {image && (
           <img
             src={image}
@@ -49,7 +50,7 @@ function ProjectCard({ project, stats, onOpenLore, onNavigateToYxShot }) {
             loading="lazy"
             decoding="async"
             className={`${
-              playIcon ? 'mx-auto h-full w-auto rounded-[22%] p-4 object-contain sm:p-8' : 'h-full w-full object-cover object-top'
+              playIcon ? 'mx-auto h-full w-auto rounded-[22%] p-4 object-contain sm:p-8' : 'h-full w-full object-cover'
             } opacity-85 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] group-hover:opacity-100`}
           />
         )}
@@ -75,10 +76,11 @@ function ProjectCard({ project, stats, onOpenLore, onNavigateToYxShot }) {
         />
       </div>
 
-      {(stat || project.inProgress || project.hasLore) && (
+      {(stat || project.inProgress || project.testing || project.hasLore) && (
         <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-faint">
           {stat && <span className="tabular-nums text-paper-dim">{stat}</span>}
           {project.inProgress && <span>{t(TXT.inProgress)}</span>}
+          {project.testing && <span>{t(TXT.testing)}</span>}
           {project.hasLore && (
             <button
               type="button"

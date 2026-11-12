@@ -3,7 +3,7 @@ import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import ProjectsSection from './components/ProjectsSection';
-import AboutSection from './components/AboutSection';
+import LinksSection from './components/LinksSection';
 import LoreModal from './components/LoreModal';
 import ContactSection from './components/ContactSection';
 import GallerySection from './components/GallerySection';
@@ -50,7 +50,7 @@ export default function App() {
             onNavigateToYxShot={() => window.location.assign('/yxshot')}
           />
 
-          <AboutSection />
+          <LinksSection />
 
           <GallerySection />
         </main>

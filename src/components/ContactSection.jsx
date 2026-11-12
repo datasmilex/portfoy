@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Check, Copy, MessageCircle } from 'lucide-react';
 import Reveal from './Reveal';
-import { COMMUNITIES, EMAIL, SOCIALS, WHATSAPP, WHATSAPP_LABEL } from '../data/portfolio';
+import { EMAIL, WHATSAPP, WHATSAPP_LABEL } from '../data/portfolio';
 import { useLang } from '../i18n';
 
 const TXT = {
@@ -66,15 +66,6 @@ export default function ContactSection() {
           </button>
         </Reveal>
 
-        <ul className="mt-12 flex flex-wrap gap-x-5 gap-y-2 text-sm text-mute">
-          {[...SOCIALS, ...COMMUNITIES].map((link) => (
-            <li key={link.url}>
-              <a href={link.url} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-paper">
-                {t(link.name)}
-              </a>
-            </li>
-          ))}
-        </ul>
 
         <div className="mt-12 flex flex-col gap-1 border-t border-line pt-5 text-[13px] text-faint sm:flex-row sm:justify-between">
           <span>© {new Date().getFullYear()} Yunus Emre Gedik · {WHATSAPP_LABEL}</span>
