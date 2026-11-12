@@ -1,9 +1,9 @@
 /**
  * Vercel Serverless Function: /api/download
- * Fully configured with user's Safesite RapidAPI key + multi-tier fallback scrapers.
+ * Fully configured with the Safesite RapidAPI (key from env) + multi-tier fallback scrapers.
  */
 
-const DEFAULT_RAPIDAPI_KEY = '5d9a671ebbmshca5285f2d1854f0p154a1ajsn0ca2677241d2';
+// Anahtar yalnızca Vercel ortam değişkeninde (RAPIDAPI_KEY) tutulur; koda yazılmaz.
 
 function decodeB64(str) {
   if (!str) return '';
@@ -18,7 +18,7 @@ function decodeB64(str) {
  * 1. User's Safesite RapidAPI Endpoint (Primary Engine)
  */
 async function extractViaSafesiteRapidAPI(url, apiKey) {
-  const key = apiKey || process.env.RAPIDAPI_KEY || DEFAULT_RAPIDAPI_KEY;
+  const key = apiKey || process.env.RAPIDAPI_KEY;
   try {
     const endpoint = `https://instagram-downloader-download-instagram-stories-videos4.p.rapidapi.com/convert?url=${encodeURIComponent(url)}`;
     const res = await fetch(endpoint, {
@@ -254,7 +254,7 @@ export default async function handler(req, res) {
     }
 
     const cleanUrl = `https://www.instagram.com/reel/${shortcode}/`;
-    const apiKey = process.env.RAPIDAPI_KEY || DEFAULT_RAPIDAPI_KEY;
+    const apiKey = process.env.RAPIDAPI_KEY;
 
     // Step 1: Safesite RapidAPI (Primary)
     let extractedVideo = await extractViaSafesiteRapidAPI(cleanUrl, apiKey);
