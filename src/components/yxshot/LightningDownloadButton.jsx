@@ -8,9 +8,12 @@ import { parseInstagramUrl, ERROR_MESSAGES } from '../../lib/constants';
 import { extractMedia } from '../../services/videoExtractor';
 import { generateFileName } from '../../lib/utils';
 
-// Exact SVG path of the Yunovax lightning bolt from /favicon.svg
-const LIGHTNING_PATH =
-  "M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z";
+// Yunovax cube mark (same paths as src/components/Logo.jsx)
+const CUBE = {
+  top: 'M31.4 9.2a1.3 1.3 0 0 1 1.2 0L52.8 21 32 33 11.2 21z',
+  left: 'M9.4 24 30.7 36.3V57L10 45a1.3 1.3 0 0 1-.6-1.1z',
+  right: 'M54.6 24 33.3 36.3V57L54 45a1.3 1.3 0 0 0 .6-1.1z',
+};
 
 export default function LightningDownloadButton() {
   const {
@@ -93,7 +96,7 @@ export default function LightningDownloadButton() {
               particleCount: 50,
               spread: 60,
               origin: { y: 0.7 },
-              colors: ['#863bff', '#47bfff', '#ede6ff', '#ffffff'],
+              colors: ['#ece7df', '#c9c3b9', '#8f897f', '#ffffff'],
             });
           } catch (e) {}
 
@@ -206,12 +209,12 @@ export default function LightningDownloadButton() {
         <div
           className={`absolute inset-0 -m-12 rounded-full transition-opacity duration-700 pointer-events-none ${
             isLoading
-              ? 'opacity-80 bg-gradient-to-tr from-purple-600/30 via-violet-500/20 to-cyan-500/20 blur-3xl scale-125 animate-pulse'
+              ? 'opacity-70 bg-stone-200/15 blur-3xl scale-125 animate-pulse'
               : isSuccess
               ? 'opacity-80 bg-gradient-to-tr from-emerald-500/30 via-teal-500/20 to-cyan-500/20 blur-3xl scale-125'
               : isHovered
-              ? 'opacity-60 bg-gradient-to-tr from-purple-600/25 via-violet-500/15 to-transparent blur-3xl scale-110'
-              : 'opacity-20 bg-purple-600/15 blur-2xl'
+              ? 'opacity-60 bg-stone-200/10 blur-3xl scale-110'
+              : 'opacity-20 bg-stone-200/10 blur-2xl'
           }`}
         />
 
@@ -224,130 +227,35 @@ export default function LightningDownloadButton() {
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.94 }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          className="relative group p-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded-3xl"
+          className="relative group p-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-300 rounded-3xl"
           aria-label="Tek tıkla panodan video indir"
           title="Tıkla ve panodaki videoyu hemen indir"
         >
-          {/* Main SVG with Lightning Logo and Contoured Border Lines */}
+          {/* Yunovax cube mark */}
           <svg
-            viewBox="-10 -10 68 66"
-            className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)] overflow-visible transition-transform duration-300"
+            viewBox="2 2 60 62"
+            className="w-44 h-44 sm:w-52 sm:h-52 md:w-60 md:h-60 drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)] overflow-visible"
           >
-            <defs>
-              {/* Gradients */}
-              <linearGradient id="lightningGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#9d4edd" />
-                <stop offset="50%" stopColor="#863bff" />
-                <stop offset="100%" stopColor="#5a189a" />
-              </linearGradient>
+            <motion.g
+              animate={{ y: isLoading ? [0, -1.5, 0] : 0 }}
+              transition={{ repeat: isLoading ? Infinity : 0, duration: 1, ease: 'easeInOut' }}
+            >
+              <path d={CUBE.top} fill={isSuccess ? '#a7f3d0' : '#ece7df'} fillOpacity={isHovered || isLoading ? 1 : 0.92} className="transition-all duration-300" />
+              <path d={CUBE.left} fill={isSuccess ? '#34d399' : '#c9c3b9'} fillOpacity={isHovered || isLoading ? 1 : 0.92} className="transition-all duration-300" />
+              <path d={CUBE.right} fill={isSuccess ? '#059669' : '#8f897f'} fillOpacity={isHovered || isLoading ? 1 : 0.92} className="transition-all duration-300" />
+            </motion.g>
 
-              <linearGradient id="electricStroke" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#d8b4fe" />
-                <stop offset="50%" stopColor="#863bff" />
-                <stop offset="100%" stopColor="#38bdf8" />
-              </linearGradient>
-
-              <linearGradient id="successGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#34d399" />
-                <stop offset="100%" stopColor="#059669" />
-              </linearGradient>
-
-              {/* Glow Filter */}
-              <filter id="lightningGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="2.5" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-              </filter>
-            </defs>
-
-            {/* Outermost Pulsing Contour Line (Dashed electric border) */}
-            <motion.path
-              d={LIGHTNING_PATH}
-              fill="none"
-              stroke={isSuccess ? '#34d399' : '#863bff'}
-              strokeWidth="0.75"
-              strokeDasharray="4 3"
-              transform="scale(1.28) translate(-5.5, -5)"
-              animate={{
-                rotate: [0, 0],
-                strokeOpacity: isLoading ? [0.3, 0.9, 0.3] : isHovered ? 0.7 : 0.25,
-              }}
-              transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-            />
-
-            {/* Middle Contour Border Line (Exact offset lightning shape border) */}
-            <motion.path
-              d={LIGHTNING_PATH}
-              fill="none"
-              stroke={isSuccess ? '#34d399' : 'url(#electricStroke)'}
-              strokeWidth="1.2"
-              transform="scale(1.14) translate(-2.7, -2.5)"
-              animate={{
-                strokeOpacity: isLoading ? [0.4, 1, 0.4] : isHovered ? 0.9 : 0.5,
-              }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
-              filter="url(#lightningGlow)"
-            />
-
-            {/* Close-in Inner Contour Line */}
-            <path
-              d={LIGHTNING_PATH}
-              fill="none"
-              stroke={isSuccess ? '#a7f3d0' : '#ffffff'}
-              strokeWidth="0.8"
-              strokeOpacity={isHovered ? '0.85' : '0.4'}
-              transform="scale(1.05) translate(-1, -0.9)"
-            />
-
-            {/* Core Yunovax Lightning Bolt Body */}
-            <path
-              d={LIGHTNING_PATH}
-              fill={isSuccess ? 'url(#successGradient)' : 'url(#lightningGradient)'}
-              stroke="#ffffff"
-              strokeWidth="0.7"
-              strokeOpacity={isHovered ? '0.9' : '0.6'}
-              className="transition-all duration-300"
-            />
-
-            {/* Subtle Inner Highlight Spine */}
-            <path
-              d="M13 2H36L30 11H40L25 38V29H13L19 20H8L13 2Z"
-              fill="#ffffff"
-              fillOpacity={isHovered ? 0.22 : 0.12}
-              className="pointer-events-none"
-            />
-
-            {/* Center Status Icon Overlay (Loader / Check / Download) */}
             {isLoading ? (
-              <g transform="translate(14, 13)">
+              <g transform="translate(22, 30)">
                 <circle cx="10" cy="10" r="12" fill="#09090b" fillOpacity="0.85" />
-                <path
-                  d="M10 2 A8 8 0 0 1 18 10"
-                  fill="none"
-                  stroke="#ffffff"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                >
-                  <animateTransform
-                    attributeName="transform"
-                    type="rotate"
-                    from="0 10 10"
-                    to="360 10 10"
-                    dur="0.8s"
-                    repeatCount="indefinite"
-                  />
+                <path d="M10 2 A8 8 0 0 1 18 10" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round">
+                  <animateTransform attributeName="transform" type="rotate" from="0 10 10" to="360 10 10" dur="0.8s" repeatCount="indefinite" />
                 </path>
               </g>
             ) : isSuccess ? (
-              <g transform="translate(14, 13)">
+              <g transform="translate(22, 30)">
                 <circle cx="10" cy="10" r="12" fill="#059669" />
-                <path
-                  d="M6 10 L9 13 L15 7"
-                  fill="none"
-                  stroke="#ffffff"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+                <path d="M6 10 L9 13 L15 7" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
               </g>
             ) : null}
           </svg>
@@ -358,7 +266,7 @@ export default function LightningDownloadButton() {
       <div className="mt-4 text-center flex flex-col items-center gap-1.5">
         <div className="flex items-center gap-2">
           {isLoading ? (
-            <Loader2 className="w-4 h-4 animate-spin text-purple-400" />
+            <Loader2 className="w-4 h-4 animate-spin text-stone-300" />
           ) : isSuccess ? (
             <Check className="w-4 h-4 text-emerald-400" />
           ) : (
@@ -377,7 +285,7 @@ export default function LightningDownloadButton() {
         {isLoading && downloadProgress > 0 && (
           <div className="w-48 bg-zinc-800 rounded-full h-1.5 mt-2 overflow-hidden">
             <div
-              className="bg-purple-500 h-full transition-all duration-300 rounded-full"
+              className="bg-stone-300 h-full transition-all duration-300 rounded-full"
               style={{ width: `${downloadProgress}%` }}
             />
           </div>

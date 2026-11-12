@@ -22,7 +22,7 @@ const FAQS = [
       'Tüm Reels, Video, Gönderi (/p/) ve IGTV bağlantılarını destekler. Bağlantıyı kopyalayıp kutucuğa yapıştırmanız yeterlidir.',
   },
   {
-    icon: <Smartphone className="w-4 h-4 text-purple-400" />,
+    icon: <Smartphone className="w-4 h-4 text-stone-300" />,
     question: 'Gizli hesaplardaki videolar indirilebilir mi?',
     answer:
       'Gizlilik politikaları gereği yalnızca herkese açık (Public) profillerdeki Reels ve video içerikleri indirilebilir.',

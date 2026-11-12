@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Info, ArrowLeft, ShieldCheck, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Logo from '../Logo';
 
 export default function Header({ onBackToPortfolio }) {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
@@ -22,7 +23,7 @@ export default function Header({ onBackToPortfolio }) {
 
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center p-1.5">
-              <img src="/yxshot-logo.svg" alt="Logo" className="w-full h-full object-contain" />
+              <Logo className="w-full h-full" />
             </div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-base tracking-tight text-white">

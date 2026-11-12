@@ -2,6 +2,7 @@ import React, { useState, useEffect, useTransition } from 'react';
 import { Clipboard, ArrowRight, Loader2, Sparkles, X, CheckCircle2, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
+import Logo from '../Logo';
 import { useYxShotStore } from '../../store/useYxShotStore';
 import { parseInstagramUrl, ERROR_MESSAGES } from '../../lib/constants';
 import { extractMedia } from '../../services/videoExtractor';
@@ -120,7 +121,7 @@ export default function LinkInput() {
         <div className="relative flex items-center p-1.5 rounded-xl bg-zinc-900 border border-zinc-800 focus-within:border-zinc-500 focus-within:ring-1 focus-within:ring-zinc-500 shadow-sm transition-colors">
           
           <div className="pl-3 pr-2 flex items-center justify-center">
-            <img src="/yxshot-logo.svg" alt="Yunovax" className="w-5 h-5 object-contain" />
+            <Logo className="w-5 h-5" />
           </div>
 
           <input

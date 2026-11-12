@@ -42,7 +42,7 @@ export default function BottomNav() {
               <div className="relative flex items-center">
                 <Icon className={`w-4 h-4 ${isActive ? 'scale-110 text-white' : 'text-zinc-400'}`} />
                 {tab.badge && (
-                  <span className="absolute -top-2 -right-3 px-1.5 py-0.2 bg-purple-500 text-white rounded-full text-xs font-mono font-bold">
+                  <span className="absolute -top-2 -right-3 px-1.5 py-0.2 bg-stone-300 text-zinc-900 rounded-full text-xs font-mono font-bold">
                     {tab.badge}
                   </span>
                 )}
